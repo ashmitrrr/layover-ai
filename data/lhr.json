@@ -1,0 +1,23 @@
+{
+  "city_name": "London",
+  "airport_code": "LHR",
+  "timezone": "Europe/London",
+  "visa_policy": {
+    "indian": { "type": "Visa Required", "details": "Direct Airside Transit Visa (DATV) usually required. EXEMPT if holding valid US/Can/Aus/NZ/Schengen D visa.", "allowed_hours": 24 },
+    "us": { "type": "Visa Free", "details": "6 months entry as tourist.", "allowed_hours": 4320 },
+    "eu": { "type": "Visa Free", "details": "Standard visitor entry.", "allowed_hours": 4320 },
+    "uk": { "type": "Citizen", "details": "Welcome Home.", "allowed_hours": 99999 },
+    "australian": { "type": "Visa Free", "details": "6 months entry.", "allowed_hours": 4320 },
+    "japanese": { "type": "Visa Free", "details": "6 months entry.", "allowed_hours": 4320 }
+  },
+  "activities": [
+    { "title": "Elizabeth Line to Soho", "type": "SIGHTS", "description": "New high-speed train gets you to Tottenham Court Rd in 35 mins. Walk to Chinatown/Covent Garden.", "location": { "lat": 51.5165, "lon": -0.1310, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 6, "closing_hour_24": 24 }, "cost_tier": "MEDIUM" },
+    { "title": "Windsor Castle", "type": "HISTORY", "description": "The King's home. Very close to Heathrow (20 min taxi). Great for layovers where you don't want to go central.", "location": { "lat": 51.4839, "lon": -0.6044, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 4, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 17 }, "cost_tier": "MEDIUM" },
+    { "title": "Big Ben & Westminster", "type": "SIGHTS", "description": "The classic London view. Tube: Piccadilly Line to Westminster (takes 50 mins).", "location": { "lat": 51.5007, "lon": -0.1246, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 0, "closing_hour_24": 24 }, "cost_tier": "FREE" },
+    { "title": "Aerotel London (T3)", "type": "SLEEP", "description": "Landside hotel in T3 arrivals. Good if you have a long overnight wait and visa to enter.", "location": { "lat": 51.4700, "lon": -0.4543, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 4, "is_24h": true }, "cost_tier": "HIGH" },
+    { "title": "Harrods Department Store", "type": "SHOPPING", "description": "Luxury shopping in Knightsbridge. Piccadilly Line stops right there.", "location": { "lat": 51.4994, "lon": -0.1632, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 21 }, "cost_tier": "HIGH" },
+    { "title": "Heathrow Observation Deck (T4)", "type": "RELAX", "description": "270-degree views of the runway near Gates 15/16. iPad stations and binoculars.", "location": { "lat": 51.4594, "lon": -0.4414, "zone": "AIRSIDE" }, "time_constraints": { "min_duration_hours": 1, "is_24h": true }, "cost_tier": "FREE" },
+    { "title": "Dishoom Carnaby", "type": "FOOD", "description": "Famous Bombay Cafe style food. Great breakfast or lunch. Expect queues.", "location": { "lat": 51.5134, "lon": -0.1390, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 8, "closing_hour_24": 23 }, "cost_tier": "MEDIUM" },
+    { "title": "Plaza Premium Lounge T2", "type": "RELAX", "description": "Award-winning lounge. Showers available. Access via Priority Pass.", "location": { "lat": 51.4700, "lon": -0.4543, "zone": "AIRSIDE" }, "time_constraints": { "min_duration_hours": 2, "is_24h": true }, "cost_tier": "MEDIUM" }
+  ]
+}

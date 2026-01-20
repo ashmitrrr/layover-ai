@@ -1,0 +1,23 @@
+{
+  "city_name": "Istanbul",
+  "airport_code": "IST",
+  "timezone": "Europe/Istanbul",
+  "visa_policy": {
+    "indian": { "type": "Visa Required", "details": "E-Visa required. Free Transit Tour (Touristanbul) ONLY if flying Turkish Airlines.", "allowed_hours": 720 },
+    "us": { "type": "Visa Free", "details": "90 days entry.", "allowed_hours": 2160 },
+    "eu": { "type": "Visa Free", "details": "90 days entry.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "90 days entry.", "allowed_hours": 2160 },
+    "australian": { "type": "Visa on Arrival", "details": "E-Visa or VoA.", "allowed_hours": 2160 },
+    "japanese": { "type": "Visa Free", "details": "90 days entry.", "allowed_hours": 2160 }
+  },
+  "activities": [
+    { "title": "Hagia Sophia", "type": "CULTURE", "description": "Ancient mosque and architectural marvel. 1 hour taxi from airport (New IST is far).", "location": { "lat": 41.0086, "lon": 28.9802, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 22 }, "cost_tier": "LOW" },
+    { "title": "Grand Bazaar", "type": "SHOPPING", "description": "One of the largest covered markets in the world. Spices, carpets, lamps.", "location": { "lat": 41.0108, "lon": 28.9680, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 19 }, "cost_tier": "LOW" },
+    { "title": "Turkish Airlines Lounge", "type": "RELAX", "description": "Massive world-class lounge with sleeping suites, cinema, and chefs cooking Pide.", "location": { "lat": 41.2612, "lon": 28.7419, "zone": "AIRSIDE" }, "time_constraints": { "min_duration_hours": 3, "is_24h": true }, "cost_tier": "HIGH" },
+    { "title": "YotelAir (Airside)", "type": "SLEEP", "description": "Modern cabins inside the transit area. Book 'Airside' specifically.", "location": { "lat": 41.2612, "lon": 28.7419, "zone": "AIRSIDE" }, "time_constraints": { "min_duration_hours": 4, "is_24h": true }, "cost_tier": "MEDIUM" },
+    { "title": "Galata Tower", "type": "SIGHTS", "description": "Medieval stone tower offering panoramic views of Istanbul.", "location": { "lat": 41.0256, "lon": 28.9741, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 22 }, "cost_tier": "MEDIUM" },
+    { "title": "Blue Mosque", "type": "CULTURE", "description": "Famous for its blue tiles. Located right next to Hagia Sophia.", "location": { "lat": 41.0054, "lon": 28.9768, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 }, "cost_tier": "FREE" },
+    { "title": "Baklava at Karakoy Gulluoglu", "type": "FOOD", "description": "The best Baklava in the world. Worth the detour.", "location": { "lat": 41.0235, "lon": 28.9782, "zone": "LANDSIDE" }, "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 7, "closing_hour_24": 24 }, "cost_tier": "MEDIUM" },
+    { "title": "Old Bazaar Airport Shopping", "type": "SHOPPING", "description": "Airside luxury shopping styled like a bazaar.", "location": { "lat": 41.2612, "lon": 28.7419, "zone": "AIRSIDE" }, "time_constraints": { "min_duration_hours": 2, "is_24h": true }, "cost_tier": "HIGH" }
+  ]
+}
