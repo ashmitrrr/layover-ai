@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY scripts/download_model.py ./scripts/download_model.py
 
 # Run the script to download the model into the image
-RUN python download_model.py
+RUN python scripts/download_model.py
 
 # Tell Hugging Face to NEVER try to download online (Use Offline Mode)
 ENV HF_HUB_OFFLINE=1
