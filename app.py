@@ -16,7 +16,7 @@ from viz import create_timeline
 # 1. SETUP & LOGO CONFIGURATION
 # ────────────────────────────────────────────────
 
-LOGO_PATH = "logo.png"
+LOGO_PATH = "assets/logo.png"
 FALLBACK_URL = "https://cdn-icons-png.flaticon.com/512/723/723955.png"
 
 
