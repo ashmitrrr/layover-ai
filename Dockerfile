@@ -7,7 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the downloader script
-COPY download_model.py .
+COPY scripts/download_model.py ./scripts/download_model.py
 
 # Run the script to download the model into the image
 RUN python download_model.py
