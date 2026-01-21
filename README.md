@@ -172,5 +172,6 @@ Ashmit Raina
 
 ## Live Application
 
-The application is deployed on Google Cloud Run.  
-Public access is available through the Cloud Run endpoint.
+Layover AI is deployed on Google Cloud Run and is publicly accessible at:
+
+[https://your-cloud-run-link-here](https://layover-ai-208927299238.us-central1.run.app)
