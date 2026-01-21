@@ -1,0 +1,90 @@
+{
+  "city_name": "Dubai",
+  "airport_code": "DXB",
+  "timezone": "Asia/Dubai",
+  "visa_policy": {
+    "indian": { "type": "Conditional", "details": "Visa on Arrival (14 days) POSSIBLE ONLY if you hold a valid US Visa, Green Card, or UK/EU Residence. Otherwise, pre-arranged visa required.", "allowed_hours": 336 },
+    "us": { "type": "Visa Free", "details": "Free visa on arrival for 30 days.", "allowed_hours": 720 },
+    "eu": { "type": "Visa Free", "details": "Visa on arrival for 90 days.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "Visa on arrival for 30 days.", "allowed_hours": 720 },
+    "australian": { "type": "Visa Free", "details": "Visa on arrival for 30 days.", "allowed_hours": 720 },
+    "japanese": { "type": "Visa Free", "details": "Visa on arrival for 30 days.", "allowed_hours": 720 }
+  },
+  "activities": [
+    {
+      "title": "DXB Airside Food + Coffee Run",
+      "type": "FOOD",
+      "description": "Late-friendly and no-visa friendly. Grab proper meals, coffee, desserts, and do a terminal walk. Keywords: airside, late night, food, easy.",
+      "location": { "lat": 25.2532, "lon": 55.3657, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Dubai Duty Free (DXB)",
+      "type": "SHOPPING",
+      "description": "Airside shopping mission: perfumes, electronics, snacks, gifts. Best when user asks to shop/buy/souvenirs. Keywords: shopping, duty free, gifts.",
+      "location": { "lat": 25.2532, "lon": 55.3657, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1, "is_24h": true },
+      "cost_tier": "VARIES"
+    },
+    {
+      "title": "DXB Lounge Reset (Showers + Quiet seating)",
+      "type": "RELAX",
+      "description": "Comfort play for long or overnight layovers. Showers + food + quiet. Keywords: relax, shower, lounge, rest.",
+      "location": { "lat": 25.2532, "lon": 55.3657, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Burj Khalifa + Dubai Mall Fountain Area",
+      "type": "SIGHTS",
+      "description": "Dubai’s #1 iconic sightseeing zone. Even if you don’t go up, the area gives maximum ‘Dubai’ vibe: fountains, skyline photos, massive mall. Keywords: burj khalifa, landmark, skyline, photos, sightseeing.",
+      "location": { "lat": 25.1972, "lon": 55.2744, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 24 },
+      "cost_tier": "MEDIUM",
+      "founders_tip": "For max sights on a 8–14h layover, this should usually beat ‘hotel’ options unless user asked to sleep."
+    },
+    {
+      "title": "Dubai Marina Walk (Night skyline vibes)",
+      "type": "SIGHTS",
+      "description": "Aesthetic skyline walk, especially evening/night. Chill sightseeing + cafes. Keywords: marina, night walk, skyline, photos, chill.",
+      "location": { "lat": 25.0800, "lon": 55.1400, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Old Dubai: Al Fahidi + Dubai Creek Abra",
+      "type": "CULTURE",
+      "description": "Culture/history vibe: old streets + quick boat ride (abra) across the creek + markets nearby. Keywords: culture, history, old dubai, souk, local.",
+      "location": { "lat": 25.2634, "lon": 55.2970, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 22 },
+      "cost_tier": "LOW",
+      "founders_tip": "This is CULTURE + sights + shopping (markets), so it should rise for culture/food/souvenir vibes."
+    },
+    {
+      "title": "Gold Souk + Spice Souk",
+      "type": "SHOPPING",
+      "description": "Classic market-style shopping + photo vibes. Works for souvenirs and quick exploring. Keywords: souk, shopping, culture, photos.",
+      "location": { "lat": 25.2697, "lon": 55.2963, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 22 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Jumeirah Beach (Quick beach reset)",
+      "type": "RELAX",
+      "description": "Beach + skyline photos. Chill, low effort, good for ‘relax’ vibes. Keywords: beach, relax, sunset, photos.",
+      "location": { "lat": 25.2048, "lon": 55.2708, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Airport Hotel / Sleep Block (DXB)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Recommend only when user explicitly wants sleep/nap/rest/shower or it’s overnight with limited sightseeing time windows. Keywords: sleep, nap, bed, overnight, rest.",
+      "location": { "lat": 25.2532, "lon": 55.3657, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH",
+      "founders_tip": "Should not outrank sights unless user asks to sleep."
+    }
+  ]
+}

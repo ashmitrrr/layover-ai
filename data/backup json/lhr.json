@@ -1,0 +1,82 @@
+{
+  "city_name": "London",
+  "airport_code": "LHR",
+  "timezone": "Europe/London",
+  "visa_policy": {
+    "indian": { "type": "Visa Required", "details": "Transit visa usually required to go landside unless holding valid US/Canada/Aus/NZ/Schengen visa (complex rules).", "allowed_hours": 24 },
+    "us": { "type": "ETA Required", "details": "Visa Free, but must obtain UK ETA (Electronic Travel Authorisation) online before flight (Starts Jan 2025).", "allowed_hours": 4320 },
+    "eu": { "type": "ETA Required", "details": "Visa Free, but must obtain UK ETA (Electronic Travel Authorisation) online before flight (Starts April 2025).", "allowed_hours": 4320 },
+    "uk": { "type": "Citizen", "details": "Welcome Home.", "allowed_hours": 99999 },
+    "australian": { "type": "ETA Required", "details": "Visa Free, but must obtain UK ETA online before flight (Starts Jan 2025).", "allowed_hours": 4320 },
+    "japanese": { "type": "ETA Required", "details": "Visa Free, but must obtain UK ETA online before flight (Starts Jan 2025).", "allowed_hours": 4320 }
+  },
+  "activities": [
+    {
+      "title": "Heathrow Airside Walk + Terminal Exploration",
+      "type": "RELAX",
+      "description": "No visa / late / tight time? Stay airside: stretch, explore shops, chill areas, and easy food. Keywords: airside, easy, low risk, late night.",
+      "location": { "lat": 51.4700, "lon": -0.4543, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Plaza Premium Lounge (Heathrow)",
+      "type": "RELAX",
+      "description": "RELAX/RESET option: showers, food, quiet seating. Best for overnight layovers or when you want comfort over sightseeing. Keywords: lounge, shower, relax, rest.",
+      "location": { "lat": 51.4700, "lon": -0.4543, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Central London Quick Sights Loop (Westminster area)",
+      "type": "SIGHTS",
+      "description": "High-impact ‘London in one walk’: Westminster/Big Ben area for skyline vibes + iconic photos. Best in daytime/evening. Keywords: big ben, london sights, photos, landmark, quick walk.",
+      "location": { "lat": 51.5007, "lon": -0.1246, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "LOW",
+      "founders_tip": "Only if visa/entry is possible + you have a safe time buffer."
+    },
+    {
+      "title": "Soho + Chinatown Food & Walk (Central)",
+      "type": "FOOD",
+      "description": "Food-first city option: Soho/Chinatown bites + walkable vibes. Keywords: food, restaurants, quick city, walk around, nightlife.",
+      "location": { "lat": 51.5135, "lon": -0.1357, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": false, "opening_hour_24": 11, "closing_hour_24": 24 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Dishoom (Central London)",
+      "type": "FOOD",
+      "description": "Food mission. Recommend when the vibe is ‘eat / Indian food / brunch / dinner’. Not a sightseeing pick. Keywords: food, restaurant, curry, chai, breakfast.",
+      "location": { "lat": 51.5134, "lon": -0.1390, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 8, "closing_hour_24": 23 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Windsor Castle (Near Heathrow)",
+      "type": "CULTURE",
+      "description": "Best ‘near-airport’ cultural sightseeing. High value if you don’t want to go central. Keywords: castle, history, culture, nearby.",
+      "location": { "lat": 51.4839, "lon": -0.6044, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 4.5, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 17 },
+      "cost_tier": "MEDIUM",
+      "founders_tip": "Great daytime pick when central London is too risky time-wise."
+    },
+    {
+      "title": "Harrods (Knightsbridge)",
+      "type": "SHOPPING",
+      "description": "Shopping-only luxury stop. Recommend when user asks to shop / luxury / brands. Keywords: shopping, luxury, souvenirs, gifts.",
+      "location": { "lat": 51.4994, "lon": -0.1632, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 21 },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Aerotel London (T3 Landside Hotel)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Use when query says sleep/rest/nap or it’s an overnight layover with limited sightseeing. Keywords: sleep, bed, nap, overnight, shower.",
+      "location": { "lat": 51.4700, "lon": -0.4543, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5, "is_24h": true },
+      "cost_tier": "HIGH",
+      "founders_tip": "Should not rank above sights unless the user vibe explicitly says sleep/rest."
+    }
+  ]
+}

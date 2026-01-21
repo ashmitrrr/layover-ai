@@ -1,0 +1,72 @@
+{
+  "city_name": "Istanbul",
+  "airport_code": "IST",
+  "timezone": "Europe/Istanbul",
+  "visa_policy": {
+    "indian": { "type": "Conditional", "details": "eVisa available ONLY if you hold a valid US, UK, or Schengen visa. Otherwise, sticker visa required.", "allowed_hours": 720 },
+    "us": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "eu": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "australian": { "type": "eVisa Required", "details": "Not visa free. Must apply for eVisa online before travel.", "allowed_hours": 2160 },
+    "japanese": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 }
+  },
+  "activities": [
+    {
+      "title": "IST Airside Food + Turkish Coffee Run",
+      "type": "FOOD",
+      "description": "No visa / late / tight time? Stay airside and do a Turkish coffee + snack mission. Keywords: airside, easy, late night, food.",
+      "location": { "lat": 41.2753, "lon": 28.7519, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "IST Lounge Reset (Showers + Quiet seating)",
+      "type": "RELAX",
+      "description": "Best for overnight layovers: showers, food, comfy seating. Keywords: relax, lounge, shower, rest.",
+      "location": { "lat": 41.2753, "lon": 28.7519, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Sultanahmet Core (Hagia Sophia area photos)",
+      "type": "SIGHTS",
+      "description": "The ‘max sights’ Istanbul zone: iconic architecture + skyline photos. Best daytime/evening. Keywords: hagia sophia, landmark, photos, sightseeing.",
+      "location": { "lat": 41.0086, "lon": 28.9802, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 },
+      "cost_tier": "LOW",
+      "founders_tip": "Strong ‘max sights’ pick when you have 10–14h and entry is possible."
+    },
+    {
+      "title": "Blue Mosque + Square Walk",
+      "type": "CULTURE",
+      "description": "Culture + iconic photos in one compact area. Keywords: mosque, culture, architecture, photos.",
+      "location": { "lat": 41.0055, "lon": 28.9768, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Grand Bazaar (Shopping + Culture)",
+      "type": "SHOPPING",
+      "description": "Souvenir shopping + culture vibes. Works for gifts, exploring, photos. Keywords: bazaar, shopping, souvenirs, culture.",
+      "location": { "lat": 41.0107, "lon": 28.9681, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 19 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Galata Bridge Walk + Street Food",
+      "type": "FOOD",
+      "description": "Food + sights combo: walk the bridge, grab fish sandwich / snacks, skyline vibes. Keywords: food, street food, photos, walk.",
+      "location": { "lat": 41.0192, "lon": 28.9739, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6.5, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Transit Hotel / Sleep Block (IST)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Recommend only for sleep/rest/nap vibes or overnight layovers when sightseeing windows are weak. Keywords: sleep, nap, bed, overnight.",
+      "location": { "lat": 41.2753, "lon": 28.7519, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH"
+    }
+  ]
+}

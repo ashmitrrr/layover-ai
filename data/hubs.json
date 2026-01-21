@@ -1,0 +1,141 @@
+{
+  "doh": {
+    "name": "Doha",
+    "code": "DOH",
+    "region": "MIDDLE_EAST",
+    "hub_popularity": 0.90,
+    "airport_friction": 0.20,
+    "late_night_strength": 0.85,
+    "airside_strength": 0.95,
+    "landside_strength": 0.80,
+    "city_access_good_late": true,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 60, "ID": 75, "DI": 90 },
+    "terminal_change_penalty_minutes": 15,
+    "why_good": [
+      "Extremely smooth transit airport",
+      "Great airside experience",
+      "City accessible even at night"
+    ]
+  },
+
+  "dxb": {
+    "name": "Dubai",
+    "code": "DXB",
+    "region": "MIDDLE_EAST",
+    "hub_popularity": 1.0,
+    "airport_friction": 0.35,
+    "late_night_strength": 0.90,
+    "airside_strength": 0.85,
+    "landside_strength": 0.95,
+    "city_access_good_late": true,
+    "public_transport_late": "good",
+    "mct_minutes": { "II": 75, "ID": 90, "DI": 120 },
+    "terminal_change_penalty_minutes": 25,
+    "why_good": [
+      "World’s busiest layover hub",
+      "Strong nightlife + shopping",
+      "Very easy visa + taxis"
+    ]
+  },
+
+  "ist": {
+    "name": "Istanbul",
+    "code": "IST",
+    "region": "EUROPE_EAST",
+    "hub_popularity": 0.85,
+    "airport_friction": 0.45,
+    "late_night_strength": 0.60,
+    "airside_strength": 0.75,
+    "landside_strength": 0.95,
+    "city_access_good_late": false,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 75, "ID": 100, "DI": 120 },
+    "terminal_change_penalty_minutes": 20,
+    "why_good": [
+      "Amazing culture hub",
+      "Great for daytime long layovers",
+      "City trips need buffer"
+    ]
+  },
+
+  "sin": {
+    "name": "Singapore",
+    "code": "SIN",
+    "region": "SE_ASIA",
+    "hub_popularity": 0.95,
+    "airport_friction": 0.15,
+    "late_night_strength": 0.90,
+    "airside_strength": 1.0,
+    "landside_strength": 0.90,
+    "city_access_good_late": true,
+    "public_transport_late": "good",
+    "mct_minutes": { "II": 50, "ID": 60, "DI": 80 },
+    "terminal_change_penalty_minutes": 10,
+    "why_good": [
+      "Best airport experience in the world",
+      "Easy city access",
+      "Great even for short layovers"
+    ]
+  },
+
+  "bkk": {
+    "name": "Bangkok",
+    "code": "BKK",
+    "region": "SE_ASIA",
+    "hub_popularity": 0.80,
+    "airport_friction": 0.50,
+    "late_night_strength": 0.75,
+    "airside_strength": 0.70,
+    "landside_strength": 0.95,
+    "city_access_good_late": true,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 75, "ID": 100, "DI": 120 },
+    "terminal_change_penalty_minutes": 20,
+    "why_good": [
+      "Great food + nightlife city",
+      "Cheap taxis",
+      "Best for cultural layovers"
+    ]
+  },
+
+  "hnd": {
+    "name": "Tokyo Haneda",
+    "code": "HND",
+    "region": "EAST_ASIA",
+    "hub_popularity": 0.75,
+    "airport_friction": 0.35,
+    "late_night_strength": 0.50,
+    "airside_strength": 0.80,
+    "landside_strength": 0.85,
+    "city_access_good_late": false,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 60, "ID": 80, "DI": 100 },
+    "terminal_change_penalty_minutes": 15,
+    "why_good": [
+      "Clean + efficient",
+      "Great for daytime city visits",
+      "Late night city is limited"
+    ]
+  },
+
+  "lhr": {
+    "name": "London Heathrow",
+    "code": "LHR",
+    "region": "EUROPE_WEST",
+    "hub_popularity": 0.90,
+    "airport_friction": 0.65,
+    "late_night_strength": 0.40,
+    "airside_strength": 0.70,
+    "landside_strength": 0.95,
+    "city_access_good_late": false,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 90, "ID": 120, "DI": 150 },
+    "terminal_change_penalty_minutes": 30,
+    "why_good": [
+      "Massive global hub",
+      "Best for long daytime layovers",
+      "Not great for late-night transit"
+    ]
+  }
+}

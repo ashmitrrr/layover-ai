@@ -1,7 +1,9 @@
-streamlit==1.31.0
-pandas==2.2.0
-sentence-transformers==2.3.1
-plotly==5.18.0
-folium==0.15.1
-streamlit-folium==0.17.0
+streamlit
+pandas
+sentence-transformers
 torch
+numpy
+scikit-learn
+plotly
+folium
+streamlit-folium

@@ -1,0 +1,117 @@
+{
+  "city_name": "Doha",
+  "airport_code": "DOH",
+  "timezone": "Asia/Qatar",
+  "visa_policy": {
+    "indian": { "type": "Visa on Arrival", "details": "Free for 30 days, BUT you MUST have a hotel booking specifically via the 'Discover Qatar' website for the full duration.", "allowed_hours": 720 },
+    "us": { "type": "Visa Free", "details": "30 days waiver on arrival.", "allowed_hours": 720 },
+    "eu": { "type": "Visa Free", "details": "90 days visa waiver.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "30 days visa waiver.", "allowed_hours": 720 },
+    "australian": { "type": "Visa Free", "details": "30 days visa waiver.", "allowed_hours": 720 },
+    "japanese": { "type": "Visa Free", "details": "30 days visa waiver.", "allowed_hours": 720 }
+  },
+  "activities": [
+    {
+      "title": "The Orchard (Indoor Garden) — DOH",
+      "type": "RELAX",
+      "description": "A huge indoor tropical garden inside the terminal. Perfect if you have no visa or it's late — stretch your legs, grab a drink, chill without leaving airside.",
+      "location": { "lat": 25.2744, "lon": 51.6083, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 0.75, "is_24h": true },
+      "cost_tier": "FREE",
+      "founders_tip": "Best ‘no-friction’ option when city stuff is closed or immigration isn’t worth it."
+    },
+    {
+      "title": "DOH Airside Food Court Crawl",
+      "type": "FOOD",
+      "description": "Late-night friendly: quick meals, coffee, desserts, and snacks inside the terminal. Ideal for short layovers or arrivals after midnight.",
+      "location": { "lat": 25.2744, "lon": 51.6083, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1, "is_24h": true },
+      "cost_tier": "LOW",
+      "founders_tip": "If your plan is tight, food + walking beats a landside taxi mission."
+    },
+    {
+      "title": "Al Mourjan Business Lounge (DOH)",
+      "type": "RELAX",
+      "description": "Big lounge with showers, quiet zones, proper meals, and comfy seating. Great for recovering during overnight layovers.",
+      "location": { "lat": 25.2744, "lon": 51.6083, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Oryx Airport Hotel (DOH)",
+      "type": "SLEEP",
+      "description": "Transit hotel inside the terminal for real sleep, not sightseeing. Best if you want a bed + shower and you’re prioritising rest over city exploring.",
+      "location": { "lat": 25.2744, "lon": 51.6083, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH",
+      "founders_tip": "This should only rank high when the query vibes like ‘sleep / rest / nap / shower’."
+    },
+    {
+      "title": "Vitality Wellbeing & Fitness (DOH)",
+      "type": "RELAX",
+      "description": "Gym + wellbeing facilities connected to the airport hotel area. Solid option if you want a reset (stretch, light workout) without leaving the airport.",
+      "location": { "lat": 25.2744, "lon": 51.6083, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.5, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+
+    {
+      "title": "Souq Waqif",
+      "type": "CULTURE",
+      "description": "The main Doha vibe spot: traditional market streets, spices, souvenirs, shisha cafes, and some of the best local food (grills, sweets, karak). This hits CULTURE + FOOD + shopping in one go. Best in the evening/night.",
+      "location": { "lat": 25.2867, "lon": 51.5333, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 3, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 24 },
+      "cost_tier": "LOW",
+      "founders_tip": "If you only do ONE city thing in Doha, do this."
+    },
+    {
+      "title": "Doha Corniche Walk + Skyline Photos",
+      "type": "SIGHTS",
+      "description": "Scenic waterfront promenade with skyline views. Low-effort sightseeing: short taxi ride, walk, photos, and you’re done. Works even if you’re not trying to commit to a museum.",
+      "location": { "lat": 25.2940, "lon": 51.5310, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "FREE",
+      "founders_tip": "Perfect ‘safe + simple’ option for medium layovers when you want sights without a big plan."
+    },
+    {
+      "title": "Museum of Islamic Art (MIA)",
+      "type": "CULTURE",
+      "description": "Iconic museum (I.M. Pei design) + very aesthetic sea views. Great for culture + photography. Typically not a late-night option, so plan it earlier.",
+      "location": { "lat": 25.2948, "lon": 51.5393, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 2.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "National Museum of Qatar",
+      "type": "CULTURE",
+      "description": "Desert Rose architecture + immersive story of Qatar (great if you want ‘real culture’ not just shopping). Usually closes earlier, so it’s a daytime play.",
+      "location": { "lat": 25.2866, "lon": 51.5481, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 2.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Msheireb Downtown Doha",
+      "type": "SIGHTS",
+      "description": "Modern walkable district with clean streets, cafés, architecture, and quick photo spots. Great ‘light sightseeing’ that pairs well with Souq Waqif (nearby).",
+      "location": { "lat": 25.2860, "lon": 51.5300, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Katara Cultural Village",
+      "type": "CULTURE",
+      "description": "Amphitheatre, mosques, galleries, beachfront vibes, cafés — a good mix of culture + relaxing + photo spots. Works best before late night; still okay in evenings.",
+      "location": { "lat": 25.3548, "lon": 51.5311, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 3.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 23 },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "The Pearl-Qatar (Marina Walk)",
+      "type": "SIGHTS",
+      "description": "Upscale marina area for a clean walk, cafés, dessert stops, and nice night photos. More ‘chill sightseeing’ than hardcore culture.",
+      "location": { "lat": 25.3700, "lon": 51.5520, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 3, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    }
+  ]
+}

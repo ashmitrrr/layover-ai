@@ -1,0 +1,88 @@
+{
+  "city_name": "Bangkok",
+  "airport_code": "BKK",
+  "timezone": "Asia/Bangkok",
+  "visa_policy": {
+    "indian": { "type": "Visa Free", "details": "Visa exemption for 60 days (extended through 2026). Digital Arrival Card (TDAC) required.", "allowed_hours": 1440 },
+    "us": { "type": "Visa Free", "details": "Visa exemption for 60 days. ETA enrollment required starting mid-2025.", "allowed_hours": 1440 },
+    "eu": { "type": "Visa Free", "details": "Visa exemption for 60 days. ETA enrollment required starting mid-2025.", "allowed_hours": 1440 },
+    "uk": { "type": "Visa Free", "details": "Visa exemption for 60 days. ETA enrollment required starting mid-2025.", "allowed_hours": 1440 },
+    "australian": { "type": "Visa Free", "details": "Visa exemption for 60 days. ETA enrollment required starting mid-2025.", "allowed_hours": 1440 },
+    "japanese": { "type": "Visa Free", "details": "Visa exemption for 60 days.", "allowed_hours": 1440 }
+  },
+  "activities": [
+    {
+      "title": "BKK Airside Food + Thai Snack Mission",
+      "type": "FOOD",
+      "description": "No visa / late / tight time? Stay airside and do Thai food + dessert + coffee. Keywords: airside, food, late night, easy.",
+      "location": { "lat": 13.6900, "lon": 100.7501, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Airport Lounge Reset (BKK)",
+      "type": "RELAX",
+      "description": "Showers + food + comfy seating. Best for overnight or if city is too far/time risky. Keywords: relax, shower, lounge, rest.",
+      "location": { "lat": 13.6900, "lon": 100.7501, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Grand Palace + Wat Phra Kaew",
+      "type": "CULTURE",
+      "description": "The #1 Bangkok cultural sight. Temples + history + iconic photos. Best daytime. Keywords: temple, culture, history, sightseeing, photos.",
+      "location": { "lat": 13.7500, "lon": 100.4913, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 8, "closing_hour_24": 16 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Wat Arun (Temple of Dawn) + Riverside Photos",
+      "type": "SIGHTS",
+      "description": "Iconic riverside temple. Great for photos and ‘Bangkok vibes’ without spending all day. Keywords: temple, photos, sightseeing, river.",
+      "location": { "lat": 13.7437, "lon": 100.4889, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6.5, "is_24h": false, "opening_hour_24": 8, "closing_hour_24": 18 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Chao Phraya River Ferry Mini Cruise",
+      "type": "SIGHTS",
+      "description": "Low-effort sightseeing: river ferry ride past major landmarks. Great when you want max sights without complex planning. Keywords: river, sightseeing, chill, photos.",
+      "location": { "lat": 13.7292, "lon": 100.5130, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 19 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Yaowarat (Chinatown) Street Food Run",
+      "type": "FOOD",
+      "description": "Bangkok food peak: street food, dessert, neon-night vibes. Works best evening/night. Keywords: street food, nightlife, local food, cheap eats.",
+      "location": { "lat": 13.7400, "lon": 100.5090, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 17, "closing_hour_24": 24 },
+      "cost_tier": "LOW",
+      "founders_tip": "If user says food/night vibes, this should outrank hotels."
+    },
+    {
+      "title": "Chatuchak Market (Weekend)",
+      "type": "SHOPPING",
+      "description": "Massive market for souvenirs/shopping + exploring. Time-heavy and best on weekends daytime. Keywords: shopping, market, souvenirs.",
+      "location": { "lat": 13.7994, "lon": 100.5510, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 18 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Asiatique Riverside Night Market",
+      "type": "SHOPPING",
+      "description": "Night-friendly shopping + food + riverside photos. Good evening option. Keywords: night market, shopping, food, photos.",
+      "location": { "lat": 13.7047, "lon": 100.5030, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": false, "opening_hour_24": 16, "closing_hour_24": 24 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Airport Sleep Pod / Hotel Block (BKK)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Recommend only if user explicitly wants sleep/nap/rest, or it’s overnight with limited sightseeing windows. Keywords: sleep, nap, rest, shower, overnight.",
+      "location": { "lat": 13.6900, "lon": 100.7501, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "city_name": "Tokyo",
+  "airport_code": "HND",
+  "timezone": "Asia/Tokyo",
+  "visa_policy": {
+    "indian": { "type": "Visa Required", "details": "Transit visa required. 'Shore Pass' (72h) is strictly discretionary and often refused—do not rely on it.", "allowed_hours": 72 },
+    "us": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "eu": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "australian": { "type": "Visa Free", "details": "Visa exemption for up to 90 days.", "allowed_hours": 2160 },
+    "japanese": { "type": "Citizen", "details": "Welcome home.", "allowed_hours": 99999 }
+  },
+  "activities": [
+    {
+      "title": "Haneda Airside Food + Convenience Store Run",
+      "type": "FOOD",
+      "description": "No visa or it’s late? Stay in the airport and do Japanese snacks, coffee, desserts, and a terminal walk. Keywords: airside, late night, food, easy.",
+      "location": { "lat": 35.5494, "lon": 139.7798, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Haneda Observation Deck (Planes + Skyline)",
+      "type": "SIGHTS",
+      "description": "Quick ‘sights’ without leaving the airport: runway views, plane spotting, photos. Keywords: observation deck, photos, planes, easy.",
+      "location": { "lat": 35.5494, "lon": 139.7798, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1, "is_24h": false, "opening_hour_24": 6, "closing_hour_24": 22 },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Odaiba Seaside Park + Rainbow Bridge Views",
+      "type": "SIGHTS",
+      "description": "High photo payoff, lower time risk than deep Tokyo. Seaside walk + skyline. Keywords: photos, skyline, seaside, chill sightseeing.",
+      "location": { "lat": 35.6297, "lon": 139.7768, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Asakusa (Senso-ji Temple) Quick Culture Run",
+      "type": "CULTURE",
+      "description": "Temple culture + street vibes + souvenir shopping + snacks. Strong ‘culture’ and ‘sights’ pick. Keywords: temple, culture, street, souvenirs, photos.",
+      "location": { "lat": 35.7148, "lon": 139.7967, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 22 },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Shibuya Crossing + Hachiko + Quick Street Walk",
+      "type": "SIGHTS",
+      "description": "Max Tokyo vibe in minimal time. Crossing, photos, quick shopping, food nearby. Keywords: shibuya, photos, city vibe, sights, shopping.",
+      "location": { "lat": 35.6595, "lon": 139.7005, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 7, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Tsukiji Outer Market (Food-focused)",
+      "type": "FOOD",
+      "description": "Food mission: sushi, snacks, market browsing. Best daytime. Keywords: food, sushi, market, street food.",
+      "location": { "lat": 35.6655, "lon": 139.7708, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 6.5, "is_24h": false, "opening_hour_24": 7, "closing_hour_24": 15 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Airport Lounge / Shower Reset (Haneda)",
+      "type": "RELAX",
+      "description": "Comfort option when it’s overnight or you want to reset instead of sightseeing. Keywords: relax, shower, lounge, rest.",
+      "location": { "lat": 35.5494, "lon": 139.7798, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": true },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Transit Hotel / Sleep Block (Haneda)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Recommend only when user explicitly wants sleep/nap/rest or it’s overnight + late arrival. Keywords: sleep, nap, bed, overnight, rest.",
+      "location": { "lat": 35.5494, "lon": 139.7798, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH"
+    }
+  ]
+}

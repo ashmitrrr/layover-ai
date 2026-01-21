@@ -1,0 +1,107 @@
+{
+  "city_name": "Singapore",
+  "airport_code": "SIN",
+  "timezone": "Asia/Singapore",
+  "visa_policy": {
+    "indian": { "type": "Conditional", "details": "96-hour Visa Free Transit (VFTF) possible ONLY if you have a valid visa for US, UK, Aus, Can, Ger, Jap, or NZ.", "allowed_hours": 96 },
+    "us": { "type": "Visa Free", "details": "Visa exemption for 90 days.", "allowed_hours": 2160 },
+    "eu": { "type": "Visa Free", "details": "Visa exemption for 90 days.", "allowed_hours": 2160 },
+    "uk": { "type": "Visa Free", "details": "Visa exemption for 90 days.", "allowed_hours": 2160 },
+    "australian": { "type": "Visa Free", "details": "Visa exemption for 90 days.", "allowed_hours": 2160 },
+    "japanese": { "type": "Visa Free", "details": "Visa exemption for 30 days.", "allowed_hours": 720 }
+  },
+  "activities": [
+    {
+      "title": "Jewel Rain Vortex + Canopy Park (Jewel)",
+      "type": "SIGHTS",
+      "description": "The iconic indoor waterfall + glass dome vibes. Best for photos, quick sightseeing, and a ‘Singapore moment’ without going deep into the city. This is LANDSIDE at Jewel (immigration required). Keywords: waterfall, photos, landmark, chill walk, airport attraction.",
+      "location": { "lat": 1.3602, "lon": 103.9898, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 2, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 24 },
+      "cost_tier": "LOW",
+      "founders_tip": "If you have 6–10h and want max sights with low risk, Jewel is the safest ‘big payoff’ play."
+    },
+    {
+      "title": "Changi Airport Skytrain + Terminal Exploration",
+      "type": "RELAX",
+      "description": "Zero-friction option if you have no visa or it’s late. Explore terminals, ride the Skytrain, chill zones, shops, and hidden corners. Keywords: airside, late night, easy, no immigration, relax.",
+      "location": { "lat": 1.3644, "lon": 103.9915, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Butterfly Garden (T3 Transit)",
+      "type": "RELAX",
+      "description": "A calm airside garden with butterflies + greenery. Good for relaxing, photos, and killing 45–90 mins without leaving transit. Keywords: chill, nature, airside, easy.",
+      "location": { "lat": 1.3644, "lon": 103.9915, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Free Singapore Tour (Transit City Tour)",
+      "type": "SIGHTS",
+      "description": "Official transit passenger tour. Requires registration and immigration clearance (you leave the airport area). This is city sightseeing ‘lite’ and is time-sensitive. Keywords: city tour, sightseeing, highlights, bus tour, transit tour.",
+      "location": { "lat": 1.3644, "lon": 103.9915, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": false, "opening_hour_24": 7, "closing_hour_24": 19 },
+      "cost_tier": "FREE",
+      "founders_tip": "Only recommend if the user has visa/entry access and arrives early enough for tour times."
+    },
+    {
+      "title": "Marina Bay Sands SkyPark (Viewpoint)",
+      "type": "SIGHTS",
+      "description": "High-impact skyline viewpoint. Best for photos, iconic Singapore skyline, quick ‘wow’ sightseeing. Requires MRT/taxi into the city. Keywords: skyline, viewpoint, photos, landmark.",
+      "location": { "lat": 1.2834, "lon": 103.8607, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5, "is_24h": false, "opening_hour_24": 10, "closing_hour_24": 22 },
+      "cost_tier": "HIGH"
+    },
+    {
+      "title": "Gardens by the Bay (Supertrees + Domes)",
+      "type": "NATURE",
+      "description": "The best nature/sights combo in Singapore. Supertrees, Cloud Forest, aesthetic indoor domes. Requires city travel + time. Keywords: nature, sights, photos, iconic, domes.",
+      "location": { "lat": 1.2816, "lon": 103.8636, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 5.5, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 21 },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Merlion Park + Marina Bay Walk",
+      "type": "SIGHTS",
+      "description": "Low-effort sightseeing: Merlion photo, bay walk, skyline shots. Great when you want ‘max sights’ but don’t want a museum. Keywords: landmark, photos, quick walk, skyline.",
+      "location": { "lat": 1.2868, "lon": 103.8545, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 4, "is_24h": true },
+      "cost_tier": "FREE"
+    },
+    {
+      "title": "Chinatown + Buddha Tooth Relic Temple",
+      "type": "CULTURE",
+      "description": "Culture + food + street vibes. Temple visit plus hawker-style eats nearby. Keywords: culture, temple, street food, exploring, shopping souvenirs.",
+      "location": { "lat": 1.2815, "lon": 103.8443, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 4, "is_24h": false, "opening_hour_24": 9, "closing_hour_24": 18 },
+      "cost_tier": "LOW",
+      "founders_tip": "If the vibe mentions culture + food, this should rank high."
+    },
+    {
+      "title": "Lau Pa Sat Hawker Centre (Satay Street vibes)",
+      "type": "FOOD",
+      "description": "Classic Singapore food mission: satay, laksa, hawker atmosphere. Works best evening/night, and it’s a strong FOOD pick. Keywords: hawker, street food, satay, local food, dinner.",
+      "location": { "lat": 1.2807, "lon": 103.8504, "zone": "LANDSIDE" },
+      "time_constraints": { "min_duration_hours": 4, "is_24h": true },
+      "cost_tier": "LOW"
+    },
+    {
+      "title": "Airport Food Crawl (Changi Airside)",
+      "type": "FOOD",
+      "description": "If it’s late or you have no visa, stay airside and do a proper food crawl: noodles, coffee, desserts. Keywords: food, late night, airside, quick, easy.",
+      "location": { "lat": 1.3644, "lon": 103.9915, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 1.2, "is_24h": true },
+      "cost_tier": "MEDIUM"
+    },
+    {
+      "title": "Ambassador Transit Hotel (Airside)",
+      "type": "SLEEP",
+      "description": "SLEEP ONLY. Use this when the user explicitly wants sleep/rest/nap/shower or it’s an overnight layover where sightseeing isn’t realistic. Keywords: sleep, nap, rest, bed, shower, overnight.",
+      "location": { "lat": 1.3644, "lon": 103.9915, "zone": "AIRSIDE" },
+      "time_constraints": { "min_duration_hours": 6, "is_24h": true },
+      "cost_tier": "HIGH",
+      "founders_tip": "Should not rank high for ‘max sights’ queries."
+    }
+  ]
+}
