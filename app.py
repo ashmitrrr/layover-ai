@@ -5,7 +5,7 @@ import os
 
 from logic import (
     filter_and_rank_activities,
-    rank_hubs,          # NEW
+    rank_hubs,          
     analyze_vibe,
     compute_plan_risk,
     check_visa_status
@@ -76,7 +76,7 @@ st.markdown(
     margin-bottom: 1rem;
 }}
 .header-logo {{
-    width: 210px;
+    width: 250px;
     height: auto;
     filter: drop-shadow(0 0 20px rgba(0, 234, 255, 0.2));
     transition: transform 0.3s ease;
