@@ -101,3 +101,42 @@ def create_timeline(activities, arrival_hour, total_layover_hours):
     fig.update_xaxes(tickformat="%H:%M", gridcolor="rgba(255, 255, 255, 0.1)")
     fig.update_yaxes(autorange="reversed", gridcolor="rgba(255, 255, 255, 0.1)")
     return fig
+
+# v3 update 
+
+def render_timeline_v3(blocks):
+    if not blocks:
+        return None
+
+    rows = []
+    start = 0
+
+    for b in blocks:
+        minutes = int(b.get("minutes", 0))
+        label = b.get("label", "Block")
+        end = start + max(0, minutes)
+
+        rows.append({
+            "Task": label,
+            "Start": start,
+            "Finish": end,
+            "Minutes": minutes
+        })
+
+        start = end
+
+    df = pd.DataFrame(rows)
+
+    fig = px.timeline(
+        df,
+        x_start="Start",
+        x_end="Finish",
+        y="Task",
+        hover_data=["Minutes"]
+    )
+
+    fig.update_yaxes(autorange="reversed")
+    fig.update_xaxes(title="Minutes from arrival")
+    fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+
+    return fig

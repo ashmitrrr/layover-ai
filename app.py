@@ -17,8 +17,10 @@ from viz import create_timeline
 # ────────────────────────────────────────────────
 
 LOGO_PATH = "assets/logo.png"
-FALLBACK_URL = "https://cdn-icons-png.flaticon.com/512/723/723955.png"
+# 👇 UPDATE THIS: Ensure your banner image matches this filename in assets/
+BANNER_PATH = "assets/banner.png" 
 
+FALLBACK_URL = "https://cdn-icons-png.flaticon.com/512/723/723955.png"
 
 def get_base64_image(image_path):
     """Converts a local image to base64 for HTML embedding."""
@@ -27,9 +29,9 @@ def get_base64_image(image_path):
             return f"data:image/png;base64,{base64.b64encode(img_file.read()).decode()}"
     return FALLBACK_URL
 
-
 APP_ICON = LOGO_PATH if os.path.exists(LOGO_PATH) else FALLBACK_URL
-HEADER_LOGO_SRC = get_base64_image(LOGO_PATH)
+# Load the banner image for CSS
+BANNER_SRC = get_base64_image(BANNER_PATH)
 
 st.set_page_config(
     page_title="LayoverAI",
@@ -55,45 +57,52 @@ st.markdown(
     100% {{ opacity: 1; transform: translateY(0); }}
 }}
 .block-container {{ animation: fadeInSlide 0.8s ease-out; }}
-.streamlit-expanderHeader {{ animation: fadeInSlide 1s ease-out; }}
-.ai-box {{ animation: fadeInSlide 1.2s ease-out; }}
 
 .stApp {{
-    background: linear-gradient(rgba(10, 15, 25, 0.92), rgba(10, 15, 25, 0.88)),
-                url("https://wallpapers.com/images/hd/microsoft-flight-simulator-horizon-6mwe1vs8gpmjkhvo.jpg") center/cover fixed;
+    background: linear-gradient(rgba(10, 15, 25, 0.50), rgba(10, 15, 25, 0.50)),
+                url("https://unsplash.com/photos/blue-sky-with-stars-during-daytime-6AKLKt-KmdY") center/cover fixed;
 }}
+
+/* --- THE FIX IS HERE --- */
 .block-container {{
-    padding-top: 2rem !important;
+    /* Increased from 1rem to 6rem to push content BELOW the top header */
+    padding-top: 6rem !important; 
     padding-bottom: 4rem !important;
-    max-width: 1280px !important;
+    max-width: 1400px !important;
 }}
-.header-container {{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+
+/* --- HERO BANNER --- */
+.hero-banner {{
+    width: auto;
+    height: 320px;
+    margin-left: -4rem; 
+    margin-right: -4rem;
+    margin-top: 0px;  /* No extra top margin needed now */
+    
+    background-image: url("{BANNER_SRC}");
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }}
-.header-logo {{
-    width: 250px;
-    height: auto;
-    filter: drop-shadow(0 0 20px rgba(0, 234, 255, 0.2));
-    transition: transform 0.3s ease;
-}}
-.header-logo:hover {{ transform: scale(1.02); }}
+
+/* --- CENTERED SUBTITLE --- */
 .subtitle {{
     text-align: center;
     font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem;
-    color: #a0d8ef;
+    font-size: 1.5rem;
+    color: #e0f7ff;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-top: 15px;
-    margin-bottom: 3rem;
-    opacity: 0.85;
-    font-weight: 500;
+    margin-top: 0; 
+    margin-bottom: 25px;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }}
+
+/* ... (Keep the rest of your CSS exactly the same below here) ... */
 .stTextInput > div > div > input,
 .stNumberInput > div > div > input,
 .stTextArea > div > div > textarea,
@@ -145,7 +154,7 @@ label {{ color: #b0e0ff !important; font-weight: 500 !important; }}
     font-weight: 700 !important;
     font-size: 1.3rem !important;
 }}
-/* NEW: Pink gradient when the dropdown is OPEN - NUCLEAR OPTION */
+/* Pink gradient when OPEN */
 details[open] > summary,
 details[open] .streamlit-expanderHeader {{
     background: linear-gradient(135deg, #ff4b5c, #ff6b6b) !important;
@@ -153,21 +162,15 @@ details[open] .streamlit-expanderHeader {{
     box-shadow: 0 4px 15px rgba(255, 75, 92, 0.4) !important;
     color: #FFFFFF !important;
 }}
-
-/* Force all text inside the header to be white */
 details[open] > summary p,
-details[open] > summary span,
-details[open] .streamlit-expanderHeader p,
-details[open] .streamlit-expanderHeader span {{
+details[open] > summary span {{
     color: #FFFFFF !important;
-    fill: #FFFFFF !important;
 }}
-
-/* Fix the little arrow icon color */
 details[open] > summary svg {{
     fill: #FFFFFF !important;
     color: #FFFFFF !important;
 }}
+
 .streamlit-expanderContent {{
     background: rgba(15, 20, 30, 0.95) !important;
     border-radius: 0 0 10px 10px !important;
@@ -176,14 +179,12 @@ details[open] > summary svg {{
 }}
 .streamlit-expanderContent p,
 .streamlit-expanderContent div,
-.streamlit-expanderContent li,
-[data-testid="stExpander"] [data-testid="stMarkdownContainer"] p {{
+.streamlit-expanderContent li {{
     color: #E0E0E0 !important;
     font-size: 1.15rem !important;
     font-weight: 400 !important;
     line-height: 1.6 !important;
 }}
-
 
 .stat-pill {{
     display: inline-block; padding: 6px 12px; border-radius: 6px;
@@ -240,7 +241,6 @@ if "show_results" not in st.session_state:
 if "refine_mode" not in st.session_state:
     st.session_state.refine_mode = "DEFAULT"
 
-#  hub ranking state
 if "ranked_hubs" not in st.session_state:
     st.session_state.ranked_hubs = []
 if "show_hub_dropdown" not in st.session_state:
@@ -311,7 +311,7 @@ city_options = {
 city_keys = list(city_options.keys())
 
 # ────────────────────────────────────────────────
-# 4. HELPERS from v1
+# 4. HELPERS
 # ────────────────────────────────────────────────
 def generate_narrative(ranked_items, hours, user_vibe, visa_valid, arrival_time):
     if not ranked_items:
@@ -374,19 +374,22 @@ def apply_refinement(base_query: str, mode: str) -> str:
     return q
 
 # ────────────────────────────────────────────────
-# 5. HEADER
+# 5. NEW HEADER LAYOUT (Subtitle Above Banner)
 # ────────────────────────────────────────────────
+
+# 1. The Subtitle
 st.markdown(
-    f"""
-<div class="header-container">
-    <img src="{HEADER_LOGO_SRC}" class="header-logo">
-</div>
-<p class="subtitle">TURN YOUR BORING TRANSIT INTO A MINI-VACATION</p>
-""",
-    unsafe_allow_html=True,
+    '<p class="subtitle">TURN YOUR BORING TRANSIT INTO A MINI-VACATION</p>',
+    unsafe_allow_html=True
 )
 
-st.markdown("<div style='height: 3rem;'></div>", unsafe_allow_html=True)
+# 2. The Full-Width Banner (No Logo Inside)
+st.markdown(
+    f'<div class="hero-banner"></div>',
+    unsafe_allow_html=True
+)
+
+st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
 
 # ────────────────────────────────────────────────
 # 6. SEARCH SECTION
@@ -438,10 +441,8 @@ with st.container():
             if isinstance(item, dict) and "hub_id" in item
         }
 
-        # Keep only hub_ids that exist in UI list
         hub_ids = [h for h in hub_score.keys() if h in city_options]
 
-        # Dropdown label w score
         def fmt_hub(h):
             return f"{city_options.get(h, h.upper())}  —  {hub_score.get(h, 0):.0f}%"
 
@@ -462,8 +463,6 @@ with st.container():
             with st.expander("Why this hub?", expanded=False):
                 for w in why:
                     st.markdown(f"- ✅ {w}")
-
-
 
     st.markdown("<div style='height: 2.4rem;'></div>", unsafe_allow_html=True)
 
