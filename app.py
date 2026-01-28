@@ -5,7 +5,8 @@ import os
 import requests
 import time
 from urllib.parse import quote
-from streamlit_lottie import st_lottie # <--- NEW LIBRARY
+# Ensure this library is in requirements.txt: streamlit-lottie
+from streamlit_lottie import st_lottie 
 
 # Import your logic engine
 from logic import (
@@ -22,34 +23,46 @@ from viz import create_timeline
 # 1. PAGE CONFIG & ASSETS
 # ────────────────────────────────────────────────
 
+# Define Asset Paths
 LOGO_PATH = "assets/logo.png"
-BANNER_PATH = "assets/banner.png" 
+BANNER_PATH = "assets/banner.JPG" 
 FALLBACK_URL = "https://cdn-icons-png.flaticon.com/512/723/723955.png"
 
+# Helper to load images
 def get_base64_image(image_path):
     if os.path.exists(image_path):
         with open(image_path, "rb") as img_file:
             return f"data:image/png;base64,{base64.b64encode(img_file.read()).decode()}"
     return FALLBACK_URL
 
+# Helper to load Lottie animations
 def load_lottie_url(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+    try:
+        r = requests.get(url, timeout=2)
+        if r.status_code != 200: return None
+        return r.json()
+    except: return None
 
-APP_ICON = LOGO_PATH if os.path.exists(LOGO_PATH) else FALLBACK_URL
+# Determine valid logo/banner assets
+APP_ICON = LOGO_PATH if os.path.exists(LOGO_PATH) else "✈️"
 BANNER_SRC = get_base64_image(BANNER_PATH)
 
+# Set page config with your logo
 st.set_page_config(
     page_title="LayoverAI",
-    page_icon="✈️",
+    page_icon=APP_ICON,
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
+# Display top-left logo if available
+if os.path.exists(LOGO_PATH):
+    try:
+        st.logo(LOGO_PATH, icon_image=LOGO_PATH)
+    except: pass
+
 # ────────────────────────────────────────────────
-# 2. THE "ALIVE" CSS ENGINE
+# 2. THE "ALIVE" CSS ENGINE (PERMANENT DARK MODE)
 # ────────────────────────────────────────────────
 st.markdown(
     f"""
@@ -90,9 +103,11 @@ st.markdown(
 
 /* --- 1. GLOBAL ALIVE BACKGROUND --- */
 .stApp {{
+    /* Ensure dark background always wins */
+    background-color: #050a14 !important; 
     background: linear-gradient(rgba(5, 10, 20, 0.90), rgba(5, 10, 20, 0.95)),
-                url("https://unsplash.com/photos/blue-sky-with-stars-during-daytime-6AKLKt-KmdY") center/cover fixed;
-    color: #ffffff;
+                url("https://unsplash.com/photos/blue-sky-with-stars-during-daytime-6AKLKt-KmdY") center/cover fixed !important;
+    color: #ffffff !important;
     font-family: 'Outfit', sans-serif;
 }}
 
@@ -113,13 +128,14 @@ st.markdown(
     opacity: 0.3;
 }}
 
-h1, h2, h3, h4, h5, h6, p, span, div {{ color: #ffffff !important; z-index: 1; }}
+/* Force all text white */
+h1, h2, h3, h4, h5, h6, p, span, div, label {{ color: #ffffff !important; z-index: 1; }}
 
 /* --- 2. GLASS SHIMMER CONTAINERS --- */
 .glass-panel {{
     background: linear-gradient(to right, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.03) 60%, rgba(255,255,255,0.03) 100%);
     background-size: 2000px 100%;
-    animation: shimmer 6s infinite linear; /* THE SHIMMER EFFECT */
+    animation: shimmer 6s infinite linear;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -137,7 +153,7 @@ h1, h2, h3, h4, h5, h6, p, span, div {{ color: #ffffff !important; z-index: 1; }
     overflow: hidden; 
     border: 2px solid rgba(0, 212, 255, 0.2); 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    animation: pulse-border 3s infinite; /* THE PULSE EFFECT */
+    animation: pulse-border 3s infinite;
 }}
 
 /* --- 4. HOLLYWOOD ENTRY CLASSES --- */
@@ -146,31 +162,7 @@ h1, h2, h3, h4, h5, h6, p, span, div {{ color: #ffffff !important; z-index: 1; }
 .entry-2 {{ animation: slideUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.6s; }}
 .entry-3 {{ animation: slideUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.9s; }}
 
-/* --- 5. MICRO-INTERACTIONS (Cards) --- */
-.streamlit-expanderHeader {{
-    background-color: rgba(255, 255, 255, 0.02) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 8px !important;
-    color: #ffffff !important;
-    transition: all 0.3s ease !important; /* Smooth transition */
-}}
-
-.streamlit-expanderHeader:hover {{
-    border-color: #00d4ff !important; /* Glow Cyan */
-    background-color: rgba(0, 212, 255, 0.08) !important; /* Light up background */
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2) !important;
-    transform: translateY(-2px);
-}}
-
-.streamlit-expanderContent {{
-    background-color: rgba(0, 0, 0, 0.3) !important;
-    border-left: 1px solid rgba(0, 212, 255, 0.1); /* Subtle cyan border for open content */
-    border-right: 1px solid rgba(0, 212, 255, 0.1);
-    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-    border-radius: 0 0 8px 8px !important;
-}}
-
-/* --- 6. STANDARD UI ELEMENTS --- */
+/* --- 5. UI ELEMENTS & FIXES --- */
 .hero-title {{
     font-size: 3.5rem;
     font-weight: 700;
@@ -188,14 +180,27 @@ h1, h2, h3, h4, h5, h6, p, span, div {{ color: #ffffff !important; z-index: 1; }
     font-weight: 500;
     margin-bottom: 20px;
 }}
+
+/* FORCE DARK INPUTS & DROPDOWNS */
 div[data-baseweb="input"] > div, div[data-baseweb="select"] > div {{
-    background-color: rgba(0, 0, 0, 0.4) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #ffffff !important;
     border-radius: 8px !important;
 }}
 div[data-baseweb="base-input"] input {{ color: #ffffff !important; }}
 label {{ color: #00d4ff !important; font-size: 0.8rem !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-weight: 600 !important; }}
+
+/* FIX FOR DROPDOWN MENUS (POPOVERS) - Force Dark */
+ul[data-baseweb="menu"] {{
+    background-color: rgba(10, 15, 25, 0.98) !important;
+    border: 1px solid rgba(0, 212, 255, 0.2) !important;
+    backdrop-filter: blur(16px);
+}}
+li[data-baseweb="option"] {{ color: #ffffff !important; }}
+li[data-baseweb="option"][aria-selected="true"] {{ background-color: rgba(0, 212, 255, 0.2) !important; }}
+
+/* BUTTONS */
 .stButton > button {{
     background: linear-gradient(135deg, #00d4ff 0%, #005bea 100%) !important;
     color: #ffffff !important;
@@ -209,50 +214,37 @@ label {{ color: #00d4ff !important; font-size: 0.8rem !important; text-transform
     width: 100%;
 }}
 .stButton > button:hover {{ transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4) !important; }}
-.hud-stat {{
-    display: inline-flex;
-    align-items: center;
-    background: rgba(0, 212, 255, 0.1);
-    border: 1px solid rgba(0, 212, 255, 0.2);
-    color: #00d4ff !important;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-right: 12px;
+
+/* EXPANDERS (Glass Cards) */
+.streamlit-expanderHeader {{
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
 }}
-.ai-box {{
-    background: rgba(0, 212, 255, 0.05);
-    border-left: 3px solid #00d4ff;
-    padding: 20px;
-    border-radius: 0 12px 12px 0;
-    font-family: 'Outfit', sans-serif;
-    line-height: 1.6;
-    margin-bottom: 30px;
+.streamlit-expanderHeader:hover {{
+    border-color: #00d4ff !important;
+    background-color: rgba(0, 212, 255, 0.08) !important;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2) !important;
+    transform: translateY(-2px);
 }}
+.streamlit-expanderContent {{
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(0, 212, 255, 0.1) !important;
+    border-radius: 0 0 8px 8px !important;
+}}
+
+/* HUD ELEMENTS */
+.hud-stat {{ display: inline-flex; align-items: center; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); color: #00d4ff !important; padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; margin-right: 12px; }}
+.ai-box {{ background: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 20px; border-radius: 0 12px 12px 0; font-family: 'Outfit', sans-serif; line-height: 1.6; margin-bottom: 30px; }}
 .ai-box b {{ color: #00eaff !important; }}
-.stat-pill {{
-    display: inline-block; padding: 4px 10px; border-radius: 4px;
-    background: rgba(255, 255, 255, 0.05); color: #FFFFFF;
-    font-size: 0.8rem; font-weight: 600; margin-bottom: 4px;
-    width: 100%; text-align: right; border-right: 3px solid;
-}}
+.stat-pill {{ display: inline-block; padding: 4px 10px; border-radius: 4px; background: rgba(255, 255, 255, 0.05); color: #FFFFFF; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; width: 100%; text-align: right; border-right: 3px solid; }}
 .risk-pill {{ display: inline-block; padding: 5px 12px; border-radius: 20px; color: #fff; font-size: 0.85rem; font-weight: 700; margin-right: 8px; margin-bottom: 8px; }}
 .risk-low {{ background: rgba(0, 255, 157, 0.15); border: 1px solid #00ff9d; color: #00ff9d !important; }}
 .risk-med {{ background: rgba(255, 200, 0, 0.15); border: 1px solid #ffc800; color: #ffc800 !important; }}
 .risk-high {{ background: rgba(255, 50, 50, 0.15); border: 1px solid #ff3232; color: #ff3232 !important; }}
-.map-btn {{
-    display: inline-block;
-    margin-top: 10px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #00d4ff !important;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-weight: 600;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    transition: all 0.2s;
-}}
+.map-btn {{ display: inline-block; margin-top: 10px; background: rgba(0, 0, 0, 0.3); color: #00d4ff !important; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; border: 1px solid rgba(0, 212, 255, 0.3); transition: all 0.2s; }}
 .map-btn:hover {{ background: rgba(0, 212, 255, 0.1); border-color: #00d4ff; }}
 </style>
 """,
@@ -450,7 +442,7 @@ def render_safe_time_breakdown(ranked_activities, total_layover_hours):
 # 4. HEADER & BANNER (THE HUD)
 # ────────────────────────────────────────────────
 # Bigger column ratio for Banner (1.8 to 1.2)
-c_head1, c_head2 = st.columns([1.8, 1.2])
+c_head1, c_head2 = st.columns([2, 1])
 with c_head1:
     st.markdown('<h1 class="hero-title">LayoverAI</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-slogan">AI Powered Transit & Layover Intelligence</p>', unsafe_allow_html=True)
