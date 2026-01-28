@@ -7,3 +7,5 @@ scikit-learn
 plotly
 folium
 streamlit-folium
+requests
+streamlit-lottie
