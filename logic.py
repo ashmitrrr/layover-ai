@@ -44,12 +44,15 @@ def load_hubs_meta() -> Dict[str, Any]:
 # 🧠 INTELLIGENCE: Regional Weekend Definitions
 WEEKEND_MAP = {
     "doh": ["Friday", "Saturday"],       # Qatar
-    "dxb": ["Saturday", "Sunday"],       # UAE (New logic)
+    "dxb": ["Saturday", "Sunday"],       # UAE
     "sin": ["Saturday", "Sunday"],
     "lhr": ["Saturday", "Sunday"],
     "ist": ["Saturday", "Sunday"],
     "bkk": ["Saturday", "Sunday"],
     "hnd": ["Saturday", "Sunday"],
+    "icn": ["Saturday", "Sunday"],       # Seoul
+    "ams": ["Saturday", "Sunday"],       # Amsterdam
+    "cdg": ["Saturday", "Sunday"],       # Paris
 }
 
 class Airport:
@@ -88,6 +91,10 @@ class Airport:
             multiplier = 0.85  # Traffic is generally lighter on weekends
         elif is_rush_hour:
             multiplier = 1.6   # Rush hour traffic penalty
+        
+        # V3.5 Logic: Paris Traffic is notoriously worse than Amsterdam
+        if self.hub_id == "cdg" and is_rush_hour:
+            multiplier = 2.0   # Paris gets severe penalty
             
         return (base_mins * multiplier) / 60.0
 
@@ -128,54 +135,119 @@ def calculate_safe_exploration_time(
     }
 
 # ==========================================
-# 3. ROUTING INTELLIGENCE
+# 3. ROUTING INTELLIGENCE (UPDATED V3.5)
 # ==========================================
-# ... (No changes to Routing Logic, keeping existing code) ...
 AIRPORT_REGIONS = {
-    "DEL": "SOUTH_ASIA", "BOM": "SOUTH_ASIA", "BLR": "SOUTH_ASIA",
-    "SYD": "OCEANIA", "MEL": "OCEANIA",
-    "LHR": "EUROPE_WEST", "CDG": "EUROPE_WEST",
-    "DXB": "MIDDLE_EAST", "DOH": "MIDDLE_EAST", "IST": "EUROPE_EAST",
-    "SIN": "SE_ASIA", "BKK": "SE_ASIA", "HND": "EAST_ASIA"
+    # SOUTH ASIA
+    "DEL": "SOUTH_ASIA", "BOM": "SOUTH_ASIA", "BLR": "SOUTH_ASIA", "MAA": "SOUTH_ASIA", "HYD": "SOUTH_ASIA",
+    
+    # OCEANIA
+    "SYD": "OCEANIA", "MEL": "OCEANIA", "BNE": "OCEANIA", "PER": "OCEANIA", "AKL": "OCEANIA",
+    
+    # EUROPE
+    "LHR": "EUROPE_WEST", "CDG": "EUROPE_WEST", "AMS": "EUROPE_WEST", "FRA": "EUROPE_WEST", 
+    "MUC": "EUROPE_WEST", "ZRH": "EUROPE_WEST", "MAD": "EUROPE_WEST", "FCO": "EUROPE_WEST",
+    "IST": "EUROPE_EAST",
+    
+    # MIDDLE EAST
+    "DXB": "MIDDLE_EAST", "DOH": "MIDDLE_EAST", "AUH": "MIDDLE_EAST",
+    
+    # ASIA
+    "SIN": "SE_ASIA", "BKK": "SE_ASIA", 
+    "HND": "EAST_ASIA", "NRT": "EAST_ASIA", "ICN": "EAST_ASIA", "HKG": "EAST_ASIA", 
+    "PVG": "EAST_ASIA", "PEK": "EAST_ASIA",
+    
+    # NORTH AMERICA
+    "JFK": "NORTH_AMERICA", "EWR": "NORTH_AMERICA", "LAX": "NORTH_AMERICA", "SFO": "NORTH_AMERICA",
+    "ORD": "NORTH_AMERICA", "MIA": "NORTH_AMERICA", "DFW": "NORTH_AMERICA", "SEA": "NORTH_AMERICA",
+    "YVR": "NORTH_AMERICA", "YYZ": "NORTH_AMERICA", "YUL": "NORTH_AMERICA", "YYC": "NORTH_AMERICA"
 }
+
+# ---------------------------------------------------------
+# UPDATED ROUTING LOGIC (GLOBAL)
+# ---------------------------------------------------------
 ROUTE_LOGIC = {
-    ("SOUTH_ASIA", "SE_ASIA"): ["SE_ASIA"],
-    ("SE_ASIA", "SOUTH_ASIA"): ["SE_ASIA"],
+    # 1. ASIA <-> OCEANIA
     ("SOUTH_ASIA", "OCEANIA"): ["SE_ASIA"],
     ("OCEANIA", "SOUTH_ASIA"): ["SE_ASIA"],
-    ("OCEANIA", "EAST_ASIA"): ["SE_ASIA"],
-    ("EAST_ASIA", "OCEANIA"): ["SE_ASIA"],
-    ("SOUTH_ASIA", "EAST_ASIA"): ["SE_ASIA", "EAST_ASIA", "HKG"],
-    ("EAST_ASIA", "SOUTH_ASIA"): ["SE_ASIA", "EAST_ASIA", "HKG"],
-    ("SOUTH_ASIA", "NORTH_AMERICA"): ["MIDDLE_EAST", "EUROPE_WEST"],
-    ("NORTH_AMERICA", "SOUTH_ASIA"): ["MIDDLE_EAST", "EUROPE_WEST"],
-    ("SOUTH_ASIA", "EUROPE_WEST"): ["MIDDLE_EAST", "EUROPE_EAST"],
-    ("EUROPE_WEST", "SOUTH_ASIA"): ["MIDDLE_EAST", "EUROPE_EAST"],
-    ("EUROPE_WEST", "OCEANIA"): ["MIDDLE_EAST", "SE_ASIA"],
-    ("OCEANIA", "EUROPE_WEST"): ["MIDDLE_EAST", "SE_ASIA"],
+    ("SE_ASIA", "OCEANIA"): ["SE_ASIA"],
+    ("OCEANIA", "SE_ASIA"): ["SE_ASIA"],
+    ("EAST_ASIA", "OCEANIA"): ["SE_ASIA", "EAST_ASIA"],
+    ("OCEANIA", "EAST_ASIA"): ["SE_ASIA", "EAST_ASIA"],
+
+    # 2. ASIA <-> EUROPE
+    ("SOUTH_ASIA", "EUROPE_WEST"): ["MIDDLE_EAST", "EUROPE_EAST", "EUROPE_WEST"],
+    ("EUROPE_WEST", "SOUTH_ASIA"): ["MIDDLE_EAST", "EUROPE_EAST", "EUROPE_WEST"],
+    ("SE_ASIA", "EUROPE_WEST"): ["MIDDLE_EAST", "SE_ASIA", "SOUTH_ASIA"], 
+    ("EUROPE_WEST", "SE_ASIA"): ["MIDDLE_EAST", "SE_ASIA", "SOUTH_ASIA"],
+    ("EAST_ASIA", "EUROPE_WEST"): ["MIDDLE_EAST", "EUROPE_EAST", "EAST_ASIA"],
+    ("EUROPE_WEST", "EAST_ASIA"): ["MIDDLE_EAST", "EUROPE_EAST", "EAST_ASIA"],
+
+    # 3. ASIA <-> NORTH AMERICA (The Pacific Route)
+    ("SOUTH_ASIA", "NORTH_AMERICA"): ["MIDDLE_EAST", "EUROPE_WEST", "EAST_ASIA"],
+    ("NORTH_AMERICA", "SOUTH_ASIA"): ["MIDDLE_EAST", "EUROPE_WEST", "EAST_ASIA"],
+    ("SE_ASIA", "NORTH_AMERICA"): ["EAST_ASIA", "SE_ASIA"],
+    ("NORTH_AMERICA", "SE_ASIA"): ["EAST_ASIA", "SE_ASIA"],
+    ("EAST_ASIA", "NORTH_AMERICA"): ["EAST_ASIA"], # Direct or via other East Asian hubs
+    ("NORTH_AMERICA", "EAST_ASIA"): ["EAST_ASIA"],
+
+    # 4. EUROPE <-> NORTH AMERICA (The Atlantic Route)
+    ("EUROPE_WEST", "NORTH_AMERICA"): ["EUROPE_WEST", "ICELAND"], 
+    ("NORTH_AMERICA", "EUROPE_WEST"): ["EUROPE_WEST", "ICELAND"],
+    ("EUROPE_EAST", "NORTH_AMERICA"): ["EUROPE_WEST"],
+    ("NORTH_AMERICA", "EUROPE_EAST"): ["EUROPE_WEST"],
+
+    # 5. EUROPE <-> OCEANIA (The Kangaroo Route)
+    ("EUROPE_WEST", "OCEANIA"): ["MIDDLE_EAST", "SE_ASIA", "EAST_ASIA"],
+    ("OCEANIA", "EUROPE_WEST"): ["MIDDLE_EAST", "SE_ASIA", "EAST_ASIA"],
+
+    # 6. MIDDLE EAST CONNECTIONS
+    ("MIDDLE_EAST", "NORTH_AMERICA"): ["EUROPE_WEST", "MIDDLE_EAST"],
+    ("NORTH_AMERICA", "MIDDLE_EAST"): ["EUROPE_WEST", "MIDDLE_EAST"],
+    
+    # 7. INTRA-REGION (Short Haul - stick to region)
+    ("SOUTH_ASIA", "SE_ASIA"): ["SE_ASIA", "SOUTH_ASIA"],
+    ("SE_ASIA", "SOUTH_ASIA"): ["SE_ASIA", "SOUTH_ASIA"],
+    ("SOUTH_ASIA", "EAST_ASIA"): ["SE_ASIA", "EAST_ASIA"],
+    ("EAST_ASIA", "SOUTH_ASIA"): ["SE_ASIA", "EAST_ASIA"],
+    ("SE_ASIA", "EAST_ASIA"): ["SE_ASIA", "EAST_ASIA", "HKG"],
+    ("EAST_ASIA", "SE_ASIA"): ["SE_ASIA", "EAST_ASIA", "HKG"],
 }
+
 HUBS_INFO = {
     "doh": "MIDDLE_EAST", "dxb": "MIDDLE_EAST", "ist": "EUROPE_EAST",
-    "sin": "SE_ASIA", "bkk": "SE_ASIA", "hnd": "EAST_ASIA", "lhr": "EUROPE_WEST"
+    "sin": "SE_ASIA", "bkk": "SE_ASIA", "hnd": "EAST_ASIA", 
+    "lhr": "EUROPE_WEST", "cdg": "EUROPE_WEST", "ams": "EUROPE_WEST", "icn": "EAST_ASIA"
 }
+
 def rank_hubs(origin, destination, layover_hours, arrival_hour, visa_valid, user_query=""):
     origin, dest = origin.upper().strip(), destination.upper().strip()
     region_a = AIRPORT_REGIONS.get(origin, "UNKNOWN")
     region_b = AIRPORT_REGIONS.get(dest, "UNKNOWN")
-    target_regions = ROUTE_LOGIC.get((region_a, region_b), ["MIDDLE_EAST"])
+    
+    # Identify which regions are good for transit
+    default_regions = [region_a] if region_a == region_b else ["MIDDLE_EAST"]
+    target_regions = ROUTE_LOGIC.get((region_a, region_b), default_regions)
+    
     hubs_meta = load_hubs_meta()
+    
     candidates = []
     for hub_id, hub_region in HUBS_INFO.items():
         if hub_region not in target_regions: continue
         if hub_id.upper() in [origin, dest]: continue
+        
         meta = hubs_meta.get(hub_id, {})
+        if not meta: continue 
+
         base = float(meta.get("hub_popularity", 0.5)) * 100
+        
         if layover_hours > 8: base += 10
+        
         candidates.append({
             "hub_id": hub_id,
             "name": meta.get("name", hub_id.upper()),
             "score": round(base, 1),
-            "why": ["Strategic location"]
+            "why": ["Strategic location", f"Hub popularity: {meta.get('hub_popularity')}"]
         })
     candidates.sort(key=lambda x: x["score"], reverse=True)
     return candidates[:5]
@@ -198,7 +270,7 @@ def check_visa_status(hub_id, passport):
     key = mapping.get(passport, "us")
     policy = data.get("visa_policy", {}).get(key, {})
     p_type = policy.get("type", "").lower()
-    is_valid = not ("required" in p_type and "on arrival" not in p_type)
+    is_valid = not ("required" in p_type and "on arrival" not in p_type and "free" not in p_type)
     return is_valid, policy.get("type", "Unknown"), policy.get("details", "")
 
 def analyze_vibe(user_query):
@@ -212,6 +284,7 @@ def analyze_vibe(user_query):
         ("RELAX", "relax chill spa shower lounge comfort quiet"),
         ("SLEEP", "sleep nap rest hotel pod sleeping"),
         ("SHOPPING", "shopping buy souvenirs duty free mall luxury brands"),
+        ("ADVENTURE", "adventure fun activity skating tour walk"), 
     ]
     q_emb = model.encode(q, convert_to_tensor=True)
     a_embs = model.encode([t for _, t in anchors], convert_to_tensor=True)
@@ -266,6 +339,9 @@ HUB_COORDS = {
     "ist": {"lat": 41.27, "lon": 28.72},
     "bkk": {"lat": 13.69, "lon": 100.75},
     "hnd": {"lat": 35.54, "lon": 139.77},
+    "icn": {"lat": 37.46, "lon": 126.44}, # Seoul
+    "ams": {"lat": 52.31, "lon": 4.76},   # Amsterdam
+    "cdg": {"lat": 49.00, "lon": 2.55},   # Paris
 }
 def get_real_weather(hub_id):
     coords = HUB_COORDS.get(hub_id)
@@ -288,7 +364,7 @@ def get_real_weather(hub_id):
     except: return None
 
 # ==========================================
-# 6. MAIN RANKER (UPDATED)
+# 6. MAIN RANKER (UPDATED V3.5)
 # ==========================================
 def filter_and_rank_activities(hub_id, layover_hours, arrival_hour, user_query, visa_valid=False, day_of_week="Monday"):
     data = load_hub_data(hub_id)

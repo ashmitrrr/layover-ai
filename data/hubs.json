@@ -12,13 +12,8 @@
     "public_transport_late": "limited",
     "mct_minutes": { "II": 60, "ID": 75, "DI": 90 },
     "terminal_change_penalty_minutes": 15,
-    "why_good": [
-      "Extremely smooth transit airport",
-      "Great airside experience",
-      "City accessible even at night"
-    ]
+    "why_good": ["Extremely smooth transit airport", "Great airside experience", "City accessible even at night"]
   },
-
   "dxb": {
     "name": "Dubai",
     "code": "DXB",
@@ -32,13 +27,8 @@
     "public_transport_late": "good",
     "mct_minutes": { "II": 75, "ID": 90, "DI": 120 },
     "terminal_change_penalty_minutes": 25,
-    "why_good": [
-      "World’s busiest layover hub",
-      "Strong nightlife + shopping",
-      "Very easy visa + taxis"
-    ]
+    "why_good": ["World’s busiest layover hub", "Strong nightlife + shopping", "Very easy visa + taxis"]
   },
-
   "ist": {
     "name": "Istanbul",
     "code": "IST",
@@ -52,13 +42,8 @@
     "public_transport_late": "limited",
     "mct_minutes": { "II": 75, "ID": 100, "DI": 120 },
     "terminal_change_penalty_minutes": 20,
-    "why_good": [
-      "Amazing culture hub",
-      "Great for daytime long layovers",
-      "City trips need buffer"
-    ]
+    "why_good": ["Amazing culture hub", "Great for daytime long layovers", "City trips need buffer"]
   },
-
   "sin": {
     "name": "Singapore",
     "code": "SIN",
@@ -72,13 +57,8 @@
     "public_transport_late": "good",
     "mct_minutes": { "II": 50, "ID": 60, "DI": 80 },
     "terminal_change_penalty_minutes": 10,
-    "why_good": [
-      "Best airport experience in the world",
-      "Easy city access",
-      "Great even for short layovers"
-    ]
+    "why_good": ["Best airport experience in the world", "Easy city access", "Great even for short layovers"]
   },
-
   "bkk": {
     "name": "Bangkok",
     "code": "BKK",
@@ -92,13 +72,8 @@
     "public_transport_late": "limited",
     "mct_minutes": { "II": 75, "ID": 100, "DI": 120 },
     "terminal_change_penalty_minutes": 20,
-    "why_good": [
-      "Great food + nightlife city",
-      "Cheap taxis",
-      "Best for cultural layovers"
-    ]
+    "why_good": ["Great food + nightlife city", "Cheap taxis", "Best for cultural layovers"]
   },
-
   "hnd": {
     "name": "Tokyo Haneda",
     "code": "HND",
@@ -112,13 +87,8 @@
     "public_transport_late": "limited",
     "mct_minutes": { "II": 60, "ID": 80, "DI": 100 },
     "terminal_change_penalty_minutes": 15,
-    "why_good": [
-      "Clean + efficient",
-      "Great for daytime city visits",
-      "Late night city is limited"
-    ]
+    "why_good": ["Clean + efficient", "Great for daytime city visits", "Late night city is limited"]
   },
-
   "lhr": {
     "name": "London Heathrow",
     "code": "LHR",
@@ -132,10 +102,51 @@
     "public_transport_late": "limited",
     "mct_minutes": { "II": 90, "ID": 120, "DI": 150 },
     "terminal_change_penalty_minutes": 30,
-    "why_good": [
-      "Massive global hub",
-      "Best for long daytime layovers",
-      "Not great for late-night transit"
-    ]
+    "why_good": ["Massive global hub", "Best for long daytime layovers", "Not great for late-night transit"]
+  },
+  "ams": {
+    "name": "Amsterdam",
+    "code": "AMS",
+    "region": "EUROPE_WEST",
+    "hub_popularity": 0.85,
+    "airport_friction": 0.30,
+    "late_night_strength": 0.70,
+    "airside_strength": 0.90,
+    "landside_strength": 0.90,
+    "city_access_good_late": true,
+    "public_transport_late": "good",
+    "mct_minutes": { "II": 50, "ID": 60, "DI": 80 },
+    "terminal_change_penalty_minutes": 15,
+    "why_good": ["Museums inside the airport", "Fast train to city center", "Very efficient single-terminal design"]
+  },
+  "cdg": {
+    "name": "Paris CDG",
+    "code": "CDG",
+    "region": "EUROPE_WEST",
+    "hub_popularity": 0.85,
+    "airport_friction": 0.70,
+    "late_night_strength": 0.50,
+    "airside_strength": 0.80,
+    "landside_strength": 0.90,
+    "city_access_good_late": false,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 90, "ID": 110, "DI": 140 },
+    "terminal_change_penalty_minutes": 35,
+    "why_good": ["Incredible food options", "Great shopping in Terminal 2", "Access to Disneyland Paris"]
+  },
+  "icn": {
+    "name": "Seoul Incheon",
+    "code": "ICN",
+    "region": "EAST_ASIA",
+    "hub_popularity": 0.85,
+    "airport_friction": 0.20,
+    "late_night_strength": 0.60,
+    "airside_strength": 0.95,
+    "landside_strength": 0.90,
+    "city_access_good_late": false,
+    "public_transport_late": "limited",
+    "mct_minutes": { "II": 45, "ID": 60, "DI": 90 },
+    "terminal_change_penalty_minutes": 15,
+    "why_good": ["Free transit tours", "Best amenities (Showers/Nap Zones)", "Extremely clean and safe"]
   }
 }

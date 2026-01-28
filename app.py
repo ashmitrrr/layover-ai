@@ -5,7 +5,6 @@ import os
 import requests
 import time
 from urllib.parse import quote
-# Ensure this library is in requirements.txt: streamlit-lottie
 from streamlit_lottie import st_lottie 
 
 # Import your logic engine
@@ -25,7 +24,9 @@ from viz import create_timeline
 
 # Define Asset Paths
 LOGO_PATH = "assets/logo.png"
-BANNER_PATH = "assets/banner.JPG" 
+BANNER_PATH_JPG = "assets/banner.jpg"
+BANNER_PATH_PNG = "assets/banner.png"
+BANNER_PATH_CAPS = "assets/banner.JPG"
 FALLBACK_URL = "https://cdn-icons-png.flaticon.com/512/723/723955.png"
 
 # Helper to load images
@@ -35,7 +36,18 @@ def get_base64_image(image_path):
             return f"data:image/png;base64,{base64.b64encode(img_file.read()).decode()}"
     return FALLBACK_URL
 
-# Helper to load Lottie animations
+# Determine which banner exists
+if os.path.exists(BANNER_PATH_JPG):
+    BANNER_SRC = get_base64_image(BANNER_PATH_JPG)
+elif os.path.exists(BANNER_PATH_PNG):
+    BANNER_SRC = get_base64_image(BANNER_PATH_PNG)
+elif os.path.exists(BANNER_PATH_CAPS):
+    BANNER_SRC = get_base64_image(BANNER_PATH_CAPS)
+else:
+    BANNER_SRC = FALLBACK_URL
+
+# Helper to load Lottie animations (Cached)
+@st.cache_data
 def load_lottie_url(url: str):
     try:
         r = requests.get(url, timeout=2)
@@ -45,9 +57,8 @@ def load_lottie_url(url: str):
 
 # Determine valid logo/banner assets
 APP_ICON = LOGO_PATH if os.path.exists(LOGO_PATH) else "✈️"
-BANNER_SRC = get_base64_image(BANNER_PATH)
 
-# Set page config with your logo
+# Set page config
 st.set_page_config(
     page_title="LayoverAI",
     page_icon=APP_ICON,
@@ -103,7 +114,6 @@ st.markdown(
 
 /* --- 1. GLOBAL ALIVE BACKGROUND --- */
 .stApp {{
-    /* Ensure dark background always wins */
     background-color: #050a14 !important; 
     background: linear-gradient(rgba(5, 10, 20, 0.90), rgba(5, 10, 20, 0.95)),
                 url("https://unsplash.com/photos/blue-sky-with-stars-during-daytime-6AKLKt-KmdY") center/cover fixed !important;
@@ -111,7 +121,7 @@ st.markdown(
     font-family: 'Outfit', sans-serif;
 }}
 
-/* The Particle Layer (Dust Motes) */
+/* The Particle Layer */
 .stApp::before {{
     content: "";
     position: fixed;
@@ -128,7 +138,6 @@ st.markdown(
     opacity: 0.3;
 }}
 
-/* Force all text white */
 h1, h2, h3, h4, h5, h6, p, span, div, label {{ color: #ffffff !important; z-index: 1; }}
 
 /* --- 2. GLASS SHIMMER CONTAINERS --- */
@@ -147,7 +156,6 @@ h1, h2, h3, h4, h5, h6, p, span, div, label {{ color: #ffffff !important; z-inde
     z-index: 1;
 }}
 
-/* --- 3. PULSING BANNER --- */
 .banner-box {{
     border-radius: 16px; 
     overflow: hidden; 
@@ -156,13 +164,13 @@ h1, h2, h3, h4, h5, h6, p, span, div, label {{ color: #ffffff !important; z-inde
     animation: pulse-border 3s infinite;
 }}
 
-/* --- 4. HOLLYWOOD ENTRY CLASSES --- */
+/* --- 3. ANIMATIONS --- */
 .entry-0 {{ animation: slideDown 0.8s ease-out forwards; }}
 .entry-1 {{ animation: fadeIn 1.2s ease-out forwards; opacity: 0; animation-delay: 0.3s; }}
 .entry-2 {{ animation: slideUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.6s; }}
 .entry-3 {{ animation: slideUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.9s; }}
 
-/* --- 5. UI ELEMENTS & FIXES --- */
+/* --- 4. UI ELEMENTS --- */
 .hero-title {{
     font-size: 3.5rem;
     font-weight: 700;
@@ -181,7 +189,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, label {{ color: #ffffff !important; z-inde
     margin-bottom: 20px;
 }}
 
-/* FORCE DARK INPUTS & DROPDOWNS */
+/* Force Dark Inputs */
 div[data-baseweb="input"] > div, div[data-baseweb="select"] > div {{
     background-color: rgba(0, 0, 0, 0.5) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -191,7 +199,7 @@ div[data-baseweb="input"] > div, div[data-baseweb="select"] > div {{
 div[data-baseweb="base-input"] input {{ color: #ffffff !important; }}
 label {{ color: #00d4ff !important; font-size: 0.8rem !important; text-transform: uppercase !important; letter-spacing: 1px !important; font-weight: 600 !important; }}
 
-/* FIX FOR DROPDOWN MENUS (POPOVERS) - Force Dark */
+/* Fix Dropdowns */
 ul[data-baseweb="menu"] {{
     background-color: rgba(10, 15, 25, 0.98) !important;
     border: 1px solid rgba(0, 212, 255, 0.2) !important;
@@ -200,7 +208,7 @@ ul[data-baseweb="menu"] {{
 li[data-baseweb="option"] {{ color: #ffffff !important; }}
 li[data-baseweb="option"][aria-selected="true"] {{ background-color: rgba(0, 212, 255, 0.2) !important; }}
 
-/* BUTTONS */
+/* Buttons */
 .stButton > button {{
     background: linear-gradient(135deg, #00d4ff 0%, #005bea 100%) !important;
     color: #ffffff !important;
@@ -215,7 +223,7 @@ li[data-baseweb="option"][aria-selected="true"] {{ background-color: rgba(0, 212
 }}
 .stButton > button:hover {{ transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4) !important; }}
 
-/* EXPANDERS (Glass Cards) */
+/* Expanders */
 .streamlit-expanderHeader {{
     background-color: rgba(255, 255, 255, 0.02) !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -235,7 +243,7 @@ li[data-baseweb="option"][aria-selected="true"] {{ background-color: rgba(0, 212
     border-radius: 0 0 8px 8px !important;
 }}
 
-/* HUD ELEMENTS */
+/* HUD Pills */
 .hud-stat {{ display: inline-flex; align-items: center; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); color: #00d4ff !important; padding: 6px 16px; border-radius: 20px; font-size: 0.95rem; font-weight: 600; margin-right: 12px; }}
 .ai-box {{ background: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 20px; border-radius: 0 12px 12px 0; font-family: 'Outfit', sans-serif; line-height: 1.6; margin-bottom: 30px; }}
 .ai-box b {{ color: #00eaff !important; }}
@@ -265,57 +273,79 @@ if "ranked_hubs" not in st.session_state:
 if "show_hub_dropdown" not in st.session_state:
     st.session_state.show_hub_dropdown = False
 
+# EXTENDED CITY MAPPING (Global Coverage)
 CITY_TO_CODE = {
-    "delhi": "DEL", "new delhi": "DEL", "del": "DEL",
-    "mumbai": "BOM", "bom": "BOM",
-    "bangalore": "BLR", "bengaluru": "BLR", "blr": "BLR",
-    "london": "LHR", "heathrow": "LHR", "lhr": "LHR",
+    # INDIA & S. ASIA
+    "delhi": "DEL", "del": "DEL", "new delhi": "DEL",
+    "mumbai": "BOM", "bom": "BOM", "bombay": "BOM",
+    "bangalore": "BLR", "blr": "BLR", "bengaluru": "BLR",
+    "chennai": "MAA", "maa": "MAA",
+    "hyderabad": "HYD", "hyd": "HYD",
+    
+    # MIDDLE EAST
     "dubai": "DXB", "dxb": "DXB",
-    "doha": "DOH", "doh": "DOH",
-    "singapore": "SIN", "changi": "SIN", "sin": "SIN",
-    "bangkok": "BKK", "suvarnabhumi": "BKK", "bkk": "BKK",
-    "tokyo": "HND", "haneda": "HND", "hnd": "HND", "narita": "NRT", "nrt": "NRT",
+    "doha": "DOH", "doh": "DOH", "qatar": "DOH",
+    "abu dhabi": "AUH", "auh": "AUH",
+    
+    # EUROPE
+    "london": "LHR", "lhr": "LHR", "heathrow": "LHR",
+    "paris": "CDG", "cdg": "CDG", "charles de gaulle": "CDG",
+    "amsterdam": "AMS", "ams": "AMS", "schiphol": "AMS",
+    "frankfurt": "FRA", "fra": "FRA",
     "istanbul": "IST", "ist": "IST",
+    "munich": "MUC", "muc": "MUC",
+    "zurich": "ZRH", "zrh": "ZRH",
+    "madrid": "MAD", "mad": "MAD",
+    "rome": "FCO", "fco": "FCO",
+    
+    # SE ASIA & EAST ASIA
+    "singapore": "SIN", "sin": "SIN", "changi": "SIN",
+    "bangkok": "BKK", "bkk": "BKK",
+    "tokyo": "HND", "hnd": "HND", "haneda": "HND", "narita": "NRT", "nrt": "NRT",
+    "seoul": "ICN", "icn": "ICN", "incheon": "ICN",
+    "hong kong": "HKG", "hkg": "HKG",
+    "shanghai": "PVG", "pvg": "PVG",
+    "beijing": "PEK", "pek": "PEK",
+    
+    # AUSTRALIA & OCEANIA
     "sydney": "SYD", "syd": "SYD",
     "melbourne": "MEL", "mel": "MEL",
-    "new york": "JFK", "jfk": "JFK", "ny": "JFK",
+    "brisbane": "BNE", "bne": "BNE",
+    "perth": "PER", "per": "PER",
+    "auckland": "AKL", "akl": "AKL",
+    
+    # NORTH AMERICA (USA & CANADA)
+    "new york": "JFK", "jfk": "JFK", "nyc": "JFK", "newark": "EWR", "ewr": "EWR",
+    "los angeles": "LAX", "lax": "LAX",
     "san francisco": "SFO", "sfo": "SFO",
-    "paris": "CDG", "cdg": "CDG"
+    "chicago": "ORD", "ord": "ORD",
+    "miami": "MIA", "mia": "MIA",
+    "dallas": "DFW", "dfw": "DFW",
+    "seattle": "SEA", "sea": "SEA",
+    "vancouver": "YVR", "yvr": "YVR",
+    "toronto": "YYZ", "yyz": "YYZ",
+    "montreal": "YUL", "yul": "YUL",
+    "calgary": "YYC", "yyc": "YYC"
 }
 
 def get_airport_code(user_input):
     clean_input = user_input.strip().lower()
     return CITY_TO_CODE.get(clean_input, user_input.upper())
 
+# RELIABLE UNSPLASH IMAGES (No Hotlink Blocks)
 CITY_IMAGES = {
-    "doh": [
-        "https://www.qatarairways.com/content/dam/images/renditions/horizontal-3/destinations/qatar/doha/h3-discover-qatar.jpg",
-        "https://i.insider.com/614e388d2fb46b0019be1518?width=700",
-    ],
-    "dxb": [
-        "https://media.istockphoto.com/id/154918211/photo/city-of-dubai-burj-khalifa.jpg?s=612x612&w=0&k=20&c=IQ1upJGlnISqrBcBpmDS8HTCw-u6j08GkrFwV2QEMQk=",
-        "https://economymiddleeast.com/cdn-cgi/imagedelivery/Xfg_b7GtigYi5mxeAzkt9w/economymiddleeast.com/2024/12/DXB.jpg/w=1200,h=800",
-    ],
-    "sin": [
-        "https://media.istockphoto.com/id/590050726/photo/singapore-glowing-at-night.jpg?s=612x612&w=0&k=20&c=43tSsy1yC0iOAGL3ZVq3-nl84KnmWTnHGI5mwQtp8zo=",
-        "https://assets.architecturaldigest.in/photos/68c7d8d82cdd24de84422076/master/w_1600%2Cc_limit/2209940368",
-    ],
-    "bkk": [
-        "https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt946ff9e4985c1319/6731c3a64ef1040e96e55bfc/BCC-2024-EXPLORER-BANGKOK-FUN-THINGS-TO-DO-HEADER_MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart",
-        "https://cdn.sanity.io/images/nxpteyfv/goguides/43d4bd7fa049ae9062730f0b5a479ddfbf2cd77a-1600x1066.jpg",
-    ],
-    "lhr": [
-        "https://cms.inspirato.com/ImageGen.ashx?image=%2Fmedia%2F5682444%2FLondon_Dest_16531610X.jpg&width=1081.5",
-        "https://www.tripsavvy.com/thmb/vKqHGNr-M6zNFu965gNLrnnb8eg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-143685782-593523f83df78c08ab1fa4d5.jpg",
-    ],
-    "ist": [
-        "https://hblimg.mmtcdn.com/content/hubble/img/tvdestinationimages/mmt/activities/m_Istanbul_tv_destination_img_1_l_667_1000.jpg",
-        "https://cargofactsevents.com/wp-content/uploads/2025/04/IST-2.jpg",
-    ],
-    "hnd": [
-        "https://img.freepik.com/free-photo/aerial-view-tokyo-cityscape-with-fuji-mountain-japan_335224-148.jpg?semt=ais_hybrid&w=740&q=80",
-        "https://www.machiya-inn-japan.com/blog/wp-content/uploads/2024/12/Haneda-Airport-Tokyo-International-Airport.jpeg",
-    ],
+
+"doh": ["https://www.qatarairways.com/content/dam/images/renditions/horizontal-3/destinations/qatar/doha/h3-discover-qatar.jpg", "https://i.insider.com/614e388d2fb46b0019be1518?width=700"],
+"dxb": ["https://media.istockphoto.com/id/154918211/photo/city-of-dubai-burj-khalifa.jpg?s=612x612&w=0&k=20&c=IQ1upJGlnISqrBcBpmDS8HTCw-u6j08GkrFwV2QEMQk=", "https://economymiddleeast.com/cdn-cgi/imagedelivery/Xfg_b7GtigYi5mxeAzkt9w/economymiddleeast.com/2024/12/DXB.jpg/w=1200,h=800"],
+"sin": ["https://media.istockphoto.com/id/590050726/photo/singapore-glowing-at-night.jpg?s=612x612&w=0&k=20&c=43tSsy1yC0iOAGL3ZVq3-nl84KnmWTnHGI5mwQtp8zo=", "https://assets.architecturaldigest.in/photos/68c7d8d82cdd24de84422076/master/w_1600%2Cc_limit/2209940368"],
+"bkk": ["https://images.contentstack.io/v3/assets/blt06f605a34f1194ff/blt946ff9e4985c1319/6731c3a64ef1040e96e55bfc/BCC-2024-EXPLORER-BANGKOK-FUN-THINGS-TO-DO-HEADER_MOBILE.jpg?fit=crop&disable=upscale&auto=webp&quality=60&crop=smart", "https://cdn.sanity.io/images/nxpteyfv/goguides/43d4bd7fa049ae9062730f0b5a479ddfbf2cd77a-1600x1066.jpg"],
+"lhr": ["https://cms.inspirato.com/ImageGen.ashx?image=%2Fmedia%2F5682444%2FLondon_Dest_16531610X.jpg&width=1081.5", "https://www.tripsavvy.com/thmb/vKqHGNr-M6zNFu965gNLrnnb8eg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-143685782-593523f83df78c08ab1fa4d5.jpg"],
+"ist": ["https://hblimg.mmtcdn.com/content/hubble/img/tvdestinationimages/mmt/activities/m_Istanbul_tv_destination_img_1_l_667_1000.jpg", "https://cargofactsevents.com/wp-content/uploads/2025/04/IST-2.jpg"],
+"hnd": ["https://img.freepik.com/free-photo/aerial-view-tokyo-cityscape-with-fuji-mountain-japan_335224-148.jpg?semt=ais_hybrid&w=740&q=80", "https://www.machiya-inn-japan.com/blog/wp-content/uploads/2024/12/Haneda-Airport-Tokyo-International-Airport.jpeg"],
+"ams": ["https://cdn.audleytravel.com/1050/749/79/15985180-canal-cruise-in-amsterdam-netherlands.webp", "https://worldwidetravel.tips/wp-content/uploads/2020/12/Netherlands-Amsterdam-Airport-Schiphol-_120.jpg"],
+"icn": ["https://ik.imgkit.net/3vlqs5axxjf/external/http://images.ntmllc.com/v4/destination/South-Korea/Seoul/219740_SCN_Seoul_iStock521707831_ZC35CD.jpg?tr=w-1200%2Cfo-auto", "https://wheelchairtravel.org/content/images/wp-content/uploads/2015/11/seoul_airport-feature.jpg"],
+"cdg": ["https://www.chooseparisregion.org/sites/default/files/news/6---Tour-Eiffel_AdobeStock_644956457_1920_72dpi.jpg", "https://www.chooseparisregion.org/sites/default/files/territories/Paris-CDG-Airport-Area.jpg"]
+
 }
 
 city_options = {
@@ -326,6 +356,9 @@ city_options = {
     "lhr": "London (LHR) 🇬🇧",
     "ist": "Istanbul (IST) 🇹🇷",
     "hnd": "Tokyo (HND) 🇯🇵",
+    "ams": "Amsterdam (AMS) 🇳🇱",
+    "icn": "Seoul (ICN) 🇰🇷",
+    "cdg": "Paris (CDG) 🇫🇷"
 }
 city_keys = list(city_options.keys())
 
@@ -412,7 +445,6 @@ def render_safe_time_breakdown(ranked_activities, total_layover_hours):
     overhead = meta.get("total_overhead_hours", 0)
     safe_val = max(0.0, total_layover_hours - overhead)
     
-    # WRAPPED IN ANIMATED ENTRY CLASS 'entry-2'
     st.markdown(f"""
     <div class="entry-2" style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
@@ -441,16 +473,13 @@ def render_safe_time_breakdown(ranked_activities, total_layover_hours):
 # ────────────────────────────────────────────────
 # 4. HEADER & BANNER (THE HUD)
 # ────────────────────────────────────────────────
-# Bigger column ratio for Banner (1.8 to 1.2)
 c_head1, c_head2 = st.columns([2, 1])
 with c_head1:
     st.markdown('<h1 class="hero-title">LayoverAI</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-slogan">AI Powered Transit & Layover Intelligence</p>', unsafe_allow_html=True)
-    # Italicized Slogan
     st.markdown("<em>Turn Your Boring Transit Into A Mini-Vacation</em>", unsafe_allow_html=True)
 
 with c_head2:
-    # Banner Box WITH PULSE ANIMATION CLASS
     st.markdown(f"""
         <div class="banner-box">
             <img src="{BANNER_SRC}" style="width: 100%; height: auto; display: block;">
@@ -460,11 +489,10 @@ with c_head2:
 st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
 
 # ────────────────────────────────────────────────
-# 5. COMMAND DECK (SEARCH) - GLASS PANEL WITH SHIMMER
+# 5. COMMAND DECK (SEARCH)
 # ────────────────────────────────────────────────
 st.markdown('<div class="glass-panel">', unsafe_allow_html=True)
 
-# Row 1: Flight Vector
 c1, c2, c3 = st.columns([2, 2, 1.3])
 with c1:
     origin_input = st.text_input("Origin", "Delhi", key="ui_origin")
@@ -474,7 +502,6 @@ with c3:
     st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
     find_clicked = st.button("Find Hub 🔎", key="btn_find_hub")
 
-# Hub Selection Logic
 if find_clicked:
     origin_code = get_airport_code(origin_input)
     dest_code = get_airport_code(dest_input)
@@ -519,7 +546,7 @@ with col_hub:
 with col_vibe:
     user_query = st.text_input("Vibe Check", "I want local food and sightseeing", key="ui_user_query")
 
-# Row 3: Details (Time, Day, Visa)
+# Row 3: Details
 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 c_time, c_arr, c_day, c_visa = st.columns([1, 1, 1, 1.3])
 
@@ -533,7 +560,6 @@ with c_visa:
     passport_options = ["India", "USA", "UK", "EU", "Australia", "Japan"]
     selected_passport = st.selectbox("My Passport", passport_options, key="ui_passport")
     
-    # Visa Logic
     auto_visa, v_title, v_desc = check_visa_status(selected_code, selected_passport)
     visa_valid = auto_visa
     lower_title = v_title.lower()
@@ -553,16 +579,15 @@ st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 if st.button("🚀 GENERATE ITINERARY", key="btn_generate"):
     st.session_state.show_results = True
 
-st.markdown('</div>', unsafe_allow_html=True) # End Glass Panel
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ────────────────────────────────────────────────
-# 6. RESULTS DASHBOARD (SITUATION ROOM)
+# 6. RESULTS DASHBOARD
 # ────────────────────────────────────────────────
 if st.session_state.show_results:
     current_hub_name = city_options[selected_code]
 
-    # THE LOADING THEATRE (Replaces Spinner)
-    # Lottie Animation URL (A plane flying around the world)
+    # Loading Theatre
     lottie_url = "https://assets5.lottiefiles.com/packages/lf20_x62chJ.json"
     lottie_json = load_lottie_url(lottie_url)
     
@@ -572,17 +597,16 @@ if st.session_state.show_results:
             st_lottie(lottie_json, height=200, key="loading")
             st.markdown("<h3 style='text-align:center;'>Crunching Logistics...</h3>", unsafe_allow_html=True)
     
-    # Simulate processing time for the "Theatre" effect (User requested this feel)
     time.sleep(1.5)
-    if lottie_json: placeholder.empty() # Clear animation
+    if lottie_json: placeholder.empty()
 
-    # Weather Widget
+    # Weather
     weather = get_real_weather(selected_code)
     weather_html = ""
     if weather:
         weather_html = f"""<div class="hud-stat">{weather['icon']} {weather['temp']}°C {weather['condition']}</div>"""
     
-    # Situation Room Header (HOLLYWOOD ENTRY-0)
+    # Situation Room
     st.markdown(f"""
 <div class="entry-0" style="display:flex; align-items:center; justify-content:space-between; margin: 2rem 0 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
     <div>
@@ -595,7 +619,7 @@ if st.session_state.show_results:
 </div>
 """, unsafe_allow_html=True)
 
-    # City Images (HOLLYWOOD ENTRY-1)
+    # Images
     st.markdown('<div class="entry-1">', unsafe_allow_html=True)
     img_c1, img_c2 = st.columns(2)
     city_img_url, airport_img_url = CITY_IMAGES.get(selected_code, CITY_IMAGES["doh"])
@@ -603,7 +627,7 @@ if st.session_state.show_results:
     with img_c2: st.image(airport_img_url, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Vibe & Refinement
+    # Refine
     st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
     r1, r2, r3, r4, r5 = st.columns(5)
     with r1: 
@@ -619,15 +643,15 @@ if st.session_state.show_results:
 
     enriched_query = apply_refinement(user_query, st.session_state.refine_mode)
 
-    # MAIN LOGIC
+    # Logic
     ranked_activities = filter_and_rank_activities(
         selected_code, hours, arrival_time, enriched_query, visa_valid, day_of_week
     )
 
-    # 1. Safe Time Widget (Already wrapped in entry-2 inside function)
+    # Safe Time
     render_safe_time_breakdown(ranked_activities, hours)
     
-    # 2. Warning Boxes (HOLLYWOOD ENTRY-3)
+    # Warning
     st.markdown('<div class="entry-3">', unsafe_allow_html=True)
     is_late_night = (arrival_time >= 21 or arrival_time <= 4)
     is_long_sleep = (hours >= 7 and hours < 14) 
@@ -640,17 +664,17 @@ if st.session_state.show_results:
     elif is_late_night:
         st.warning("🌙 **Late Night:** Most city spots are closed. Stick to Airside options.")
 
-    # 3. Narrative
+    # Narrative
     if ranked_activities:
         narrative = generate_narrative(ranked_activities, hours, user_query, visa_valid, arrival_time)
         st.markdown(f'<div class="ai-box">{narrative}</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # RECOMMENDATIONS (HOLLYWOOD ENTRY-3)
+    # Recommendations
     if not ranked_activities:
         st.error("No matches found. Try increasing duration or changing the vibe.")
     else:
-        st.markdown('<div class="entry-3">', unsafe_allow_html=True) # Start animation wrapper for cards
+        st.markdown('<div class="entry-3">', unsafe_allow_html=True)
         risk_level, risk_reason = compute_plan_risk(ranked_activities, hours, visa_valid)
         st.markdown(f"{render_risk_pill(risk_level)} <span class='meta-pill'>🧩 {risk_reason}</span>", unsafe_allow_html=True)
         st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
@@ -668,7 +692,6 @@ if st.session_state.show_results:
                 icon = {"FOOD": "🍜", "RELAX": "💆", "SHOPPING": "🛍️"}.get(act.get("type"), "📍")
                 risk_tag = {"LOW": "✅", "MED": "⚠️", "HIGH": "🚨"}.get(risk, "ℹ️")
 
-                # Glass Card Expander
                 with st.expander(f"{icon} {act['title']}  —  {score}% Match", expanded=(score > 75)):
                     c_desc, c_stats = st.columns([2.5, 1])
                     with c_desc:
@@ -676,12 +699,10 @@ if st.session_state.show_results:
                         if "founders_tip" in act:
                             st.info(f"💡 {act['founders_tip']}")
                         
-                        # Google Maps Button
                         map_query = quote(f"{act['title']} {city_options[selected_code]}")
                         map_url = f"https://www.google.com/maps/search/?api=1&query={map_query}"
                         st.markdown(f'<a href="{map_url}" target="_blank" class="map-btn">📍 Navigate ↗</a>', unsafe_allow_html=True)
 
-                        # Reasons
                         st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
                         for r in explain.get("reasons", []): st.caption(f"✅ {r}")
                         for t in explain.get("tradeoffs", []): st.caption(f"⚠️ {t}")
@@ -714,4 +735,4 @@ if st.session_state.show_results:
             st.plotly_chart(timeline_fig, use_container_width=True)
             st.markdown("</div>", unsafe_allow_html=True)
         
-        st.markdown('</div>', unsafe_allow_html=True) # End entry-3 wrapper
+        st.markdown('</div>', unsafe_allow_html=True)

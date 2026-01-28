@@ -1,142 +1,167 @@
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 from datetime import datetime, timedelta
 
 def create_timeline(activities, arrival_hour, total_layover_hours):
     """
-    Smart Scheduler that strictly fits activities into the available time window.
-    Accounts for Arrival Logistics, Travel Time, and Departure Buffer.
+    V3 SMART SCHEDULER:
+    - Driven by 'logic.py' calculation engine (Single Source of Truth).
+    - Visualizes hard deadlines (Latest Return Time).
+    - Explicitly shows Logistics vs. Fun vs. Buffer.
     """
     if not activities:
         return None
 
+    # 1. SETUP CLOCK & CANVAS
     base_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-    start_time = base_date + timedelta(hours=arrival_hour)
+    arrival_time = base_date + timedelta(hours=arrival_hour)
+    departure_time = arrival_time + timedelta(hours=total_layover_hours)
+    
+    # 2. EXTRACT INTELLIGENCE FROM ENGINE (The "Brain" Link)
+    # We look at the first recommended activity to get the route's logistics metadata
+    top_pick = activities[0]
+    meta = top_pick.get("explain", {}).get("v3_meta", {})
+    
+    # Fallback defaults if engine data is missing (Safety Net)
+    imm_mins = meta.get("immigration_mins", 60)
+    transit_mins_one_way = meta.get("transit_mins", 60) // 2
+    sec_mins = meta.get("security_mins", 60)
+    
+    # Check if we are even going Landside
+    top_zone = top_pick["activity"]["location"]["zone"]
+    is_landside = (top_zone == "LANDSIDE")
 
-    departure_time = start_time + timedelta(hours=total_layover_hours)
-    hard_stop_time = departure_time - timedelta(hours=2)  # reserve 2h buffer
+    # 3. BUILD THE SCHEDULE BLOCKS
+    schedule = []
+    cursor = arrival_time
 
-    schedule_data = []
-    current_clock = start_time
-
-    # Determine if we will go landside at all (based on top recommendations)
-    top_zone_list = [it["activity"]["location"]["zone"] for it in activities[:4]]
-    any_landside = any(z == "LANDSIDE" for z in top_zone_list)
-
-    # Arrival logistics
-    immigration_duration = 1.5 if any_landside else 0.75
-    schedule_data.append(dict(
-        Task="Arrival & Logistics 🛬",
-        Start=current_clock,
-        Finish=current_clock + timedelta(hours=immigration_duration),
-        Type="Logistics",
-    ))
-    current_clock += timedelta(hours=immigration_duration)
-
-    # Transit to city (only if we are doing landside)
-    if any_landside:
-        transit_time = 1.0
-        schedule_data.append(dict(
-            Task="Transit to City 🚆",
-            Start=current_clock,
-            Finish=current_clock + timedelta(hours=transit_time),
+    # --- BLOCK A: ARRIVAL & IMMIGRATION ---
+    if is_landside:
+        schedule.append(dict(
+            Task="🛂 Immigration & Customs",
+            Start=cursor,
+            Finish=cursor + timedelta(minutes=imm_mins),
             Type="Logistics",
+            Color="#7f8c8d" # Grey
         ))
-        current_clock += timedelta(hours=transit_time)
+        cursor += timedelta(minutes=imm_mins)
+        
+        # --- BLOCK B: TRANSIT TO CITY ---
+        schedule.append(dict(
+            Task="🚆 Transit to City",
+            Start=cursor,
+            Finish=cursor + timedelta(minutes=transit_mins_one_way),
+            Type="Logistics",
+            Color="#3498db" # Blue
+        ))
+        cursor += timedelta(minutes=transit_mins_one_way)
 
-    # Greedy schedule
-    for item in activities:
+    # --- BLOCK C: ACTIVITIES (The Fun Stuff) ---
+    # Calculate the "Hard Return Time" (When you MUST start heading back)
+    # Formula: Departure - (Security + Transit Back + 15m Boarding Buffer)
+    transit_back_mins = transit_mins_one_way if is_landside else 0
+    safe_return_time = departure_time - timedelta(minutes=sec_mins + transit_back_mins + 15)
+    
+    for item in activities[:3]: # Only map top 3 to keep it readable
         act = item["activity"]
-        duration = act["time_constraints"]["min_duration_hours"]
-        potential_finish = current_clock + timedelta(hours=duration)
-
-        # If any landside included, reserve return transit before hard stop
-        buffer_needed_to_return = 1.0 if any_landside else 0.0
-
-        if potential_finish + timedelta(hours=buffer_needed_to_return) <= hard_stop_time:
-            schedule_data.append(dict(
-                Task=act["title"],
-                Start=current_clock,
-                Finish=potential_finish,
-                Type=act.get("type", "OTHER"),
+        duration_mins = act["time_constraints"]["min_duration_hours"] * 60
+        
+        # Will this activity fit before we have to leave?
+        if cursor + timedelta(minutes=duration_mins) <= safe_return_time:
+            schedule.append(dict(
+                Task=f"📍 {act['title']}",
+                Start=cursor,
+                Finish=cursor + timedelta(minutes=duration_mins),
+                Type="Activity",
+                Color="#00d4ff" # Cyan/Neon
             ))
-            current_clock = potential_finish
+            cursor += timedelta(minutes=duration_mins)
         else:
-            continue
+            # If it doesn't fit, we stop scheduling activities
+            break
 
-    # Return transit
-    if any_landside:
-        schedule_data.append(dict(
-            Task="Return Transit 🚆",
-            Start=current_clock,
-            Finish=current_clock + timedelta(hours=1.0),
-            Type="Logistics",
+    # --- BLOCK D: BUFFER / FREE TIME ---
+    # Any time left between now and the "Must Leave" time is pure safety buffer
+    if cursor < safe_return_time:
+        schedule.append(dict(
+            Task="☕ Safe Buffer / Free Time",
+            Start=cursor,
+            Finish=safe_return_time,
+            Type="Buffer",
+            Color="#2ecc71" # Green
         ))
-        current_clock += timedelta(hours=1.0)
+        cursor = safe_return_time
 
-    # Boarding
-    schedule_data.append(dict(
-        Task="Security & Boarding 🛫",
-        Start=current_clock,
+    # --- BLOCK E: RETURN TRANSIT ---
+    if is_landside:
+        schedule.append(dict(
+            Task="🚆 Return Transit",
+            Start=cursor,
+            Finish=cursor + timedelta(minutes=transit_mins_one_way),
+            Type="Logistics",
+            Color="#3498db"
+        ))
+        cursor += timedelta(minutes=transit_mins_one_way)
+
+    # --- BLOCK F: SECURITY & BOARDING ---
+    schedule.append(dict(
+        Task="🛡️ Security & Gate",
+        Start=cursor,
         Finish=departure_time,
         Type="Logistics",
+        Color="#e74c3c" # Red/Warning color for "Don't Miss This"
     ))
 
-    df = pd.DataFrame(schedule_data)
-
+    # 4. RENDER WITH PLOTLY
+    df = pd.DataFrame(schedule)
+    
     fig = px.timeline(
-        df, x_start="Start", x_end="Finish", y="Task", color="Type", height=350
+        df, 
+        x_start="Start", 
+        x_end="Finish", 
+        y="Task", 
+        color="Type",
+        color_discrete_map={
+            "Logistics": "#7f8c8d",
+            "Activity": "#00d4ff",
+            "Buffer": "#2ecc71"
+        },
+        height=350
     )
+
+    # 5. VISUAL INTELLIGENCE (The "Smart" Cues)
+    
+    # Add "MUST RETURN" Vertical Line
+    fig.add_vline(
+        x=safe_return_time.timestamp() * 1000, # Plotly needs ms timestamp for lines
+        line_width=2, 
+        line_dash="dash", 
+        line_color="#ff4b4b",
+        annotation_text="🚨 MUST RETURN", 
+        annotation_position="top right",
+        annotation_font_color="#ff4b4b"
+    )
+
     fig.update_layout(
-        paper_bgcolor="rgba(255, 255, 255, 0.05)",
+        paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(255, 255, 255, 0.05)",
-        font=dict(color="#E0E0E0", size=14, family="Outfit"),
-        margin=dict(l=20, r=20, t=30, b=20),
-        showlegend=True,
-        legend=dict(
-            orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
-            font=dict(color="white")
-        )
+        font=dict(color="#E0E0E0", size=13, family="Outfit"),
+        margin=dict(l=20, r=20, t=40, b=20),
+        showlegend=False,
+        hovermode="x"
     )
-    fig.update_xaxes(tickformat="%H:%M", gridcolor="rgba(255, 255, 255, 0.1)")
-    fig.update_yaxes(autorange="reversed", gridcolor="rgba(255, 255, 255, 0.1)")
-    return fig
-
-# v3 update 
-
-def render_timeline_v3(blocks):
-    if not blocks:
-        return None
-
-    rows = []
-    start = 0
-
-    for b in blocks:
-        minutes = int(b.get("minutes", 0))
-        label = b.get("label", "Block")
-        end = start + max(0, minutes)
-
-        rows.append({
-            "Task": label,
-            "Start": start,
-            "Finish": end,
-            "Minutes": minutes
-        })
-
-        start = end
-
-    df = pd.DataFrame(rows)
-
-    fig = px.timeline(
-        df,
-        x_start="Start",
-        x_end="Finish",
-        y="Task",
-        hover_data=["Minutes"]
+    
+    fig.update_xaxes(
+        tickformat="%H:%M", 
+        gridcolor="rgba(255, 255, 255, 0.1)",
+        title=None
     )
-
-    fig.update_yaxes(autorange="reversed")
-    fig.update_xaxes(title="Minutes from arrival")
-    fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    
+    fig.update_yaxes(
+        autorange="reversed", 
+        gridcolor="rgba(255, 255, 255, 0.1)",
+        title=None
+    )
 
     return fig
